@@ -120,7 +120,7 @@
 
     .tab-content {
       display: none;
-      padding: 20px;
+      padding: 15px 20px 5px 20px;
       overflow-x: hidden;
     }
 
@@ -195,6 +195,7 @@
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  overflow-y:hidden;
   min-width: 300px; /* Minimum width for controls */
 }
 
@@ -440,7 +441,6 @@
       background-color: #f0f0f0;
       border: 1px solid #ccc;
       border-radius: 3px;
-      margin-top: 15px;
     }
 
     .progress {
@@ -853,6 +853,7 @@ input[type="range"]::-webkit-slider-thumb {
 .model-path-btn{
   width:140px;
 }
+
   </style>
 </head>
 <body>
@@ -1425,13 +1426,22 @@ input[type="range"]::-webkit-slider-thumb {
       </div>
       <div class="handle"></div>
       <div class="controls-container">
-        <div class="reference-box">
-          <div class="about-box-title">About Us</div>
-          <p><strong>Developer:</strong> Zhouxin Xi, Canadian Forest Service, Natural Resources Canada</p>
-          <p><strong>Supervision and support:</strong></p>
-          <p><strong>TreeFiltering/WoodCls/QSM:</strong> Chris Hopkinson and Laura Chasmer, ARTEMIS / PEATERS Laboratory, i4Geo, University of Lethbridge</p>
-          <p><strong>TreeisoNet:</strong> Dani Degenhardt, Canadian Forest Service, Natural Resources Canada</p>
-        </div>
+<div class="reference-box">
+  <div class="about-box-title">About Us</div>
+  <p><strong>Developer:</strong> Zhouxin Xi, Canadian Forest Service, Natural Resources Canada</p>
+
+  <p><strong>Supported modules:</strong></p>
+  <ul>
+    <li>
+      <strong>TreeFiltering / WoodCls / QSM:</strong><br>
+      Chris Hopkinson and Laura Chasmer, ARTEMIS / PEATERS Laboratory, i4Geo, University of Lethbridge
+    </li>
+    <li>
+      <strong>TreeisoNet:</strong><br>
+      Dani Degenhardt, Canadian Forest Service, Natural Resources Canada
+    </li>
+  </ul>
+</div>
 
         <div class="reference-box">
           <div class="about-box-title">Data Credit</div>
@@ -1440,7 +1450,7 @@ input[type="range"]::-webkit-slider-thumb {
             <li><strong>TLS:</strong> <a href="https://doi.org/10.20383/103.0814" class="external-link">Jasper National Park plot scans</a> collected by University of Lethbridge</li>
             <li><strong>TLS:</strong> <a href="https://doi.org/10.20383/103.0814" class="external-link"> Plot scans</a> collected by University of Lethbridge and during 2014-2020 and <a href="https://laserscanning.fi/results-available-for-international-benchmarking-of-terrestrial-laser-scanning-methods/" class="external-link"> scans</a> by Finnish Geodetic Institute during 2014</li>
             <li><strong>ALS:</strong> Eastern Slopes of Alberta scans collected by University of Lethbridge</li>
-            <li><strong>UAV:</strong> Reclamation UAV drone scans collected by Natural Resources Canada</li>
+            <li><strong>UAV:</strong> <a href="https://open.canada.ca/data/en/dataset/15c99460-599b-423a-90e0-1af8a4f81913" class="external-link"> Reclamation UAV scans </a> collected by Natural Resources Canada</li>
             <li><strong>UAV:</strong> <a href="https://doi.org/10.5281/zenodo.8287792" class="external-link">FOR-instance dataset</a> from Puliti S, Pearse G, Surový P, et al.(2023).</li>
           </ul>
         </div>
