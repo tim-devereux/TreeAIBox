@@ -1,7 +1,7 @@
 
 ## TreeAIBox CloudCompare Plugin
 
-A PyQt6-based CloudCompare plugin providing a unified web-style GUI for a suite of LiDAR processing modules targeting forest and tree analysis.
+A CloudCompare Python plugin providing a unified web-style GUI for a suite of LiDAR processing modules targeting forest and tree analysis.
 
 
 ### 📖 Overview
@@ -77,8 +77,31 @@ Then select a point cloud, pick your module tab, choose/download a model, adjust
 ### ⚙️ Configuration
 
 - **`model_zoo.json`** lists available model names.  
-- **`model_server_path`** in `TreeAIBox.py` points at your model hosting URL.  
-- Logs & outputs in `~/.local/share/CloudCompare/TreeAIBox/`.
+- Logs & outputs in `C:\Users\YOURNAME\AppData\Local\CloudCompare\TreeAIBox\`.
+
+The table below summarizes the voxel resolution and GPU memory requirements of current AI models, categorized by sensor type, task, component, and scene:
+
+| Sensor                           | Task           | Component           | Scene       | Resolution | VRAM  |
+|:---------------------------------|:---------------|:--------------------|:------------|:-----------|:------|
+| ALS (or UAV without stems)       | Classification | Vegetation layer    | Mountainous | 80 cm      | 3 GB  |
+| ALS (or UAV without stems)       | Classification | Vegetation layer    | Regular     | 50 cm      | 3 GB  |
+| ALS (or UAV without stems)       | Classification | Vegetation layer    | Wellsite    | 15 cm      | 3 GB  |
+| UAV (with stems)                 | Classification | Vegetation layer    | Regular     | 12 cm      | 3 GB  |
+| UAV (with stems)                 | Classification | Stems               | Mixedwood   | 8 cm       | 3 GB  |
+| TLS                              | Classification | Vegetation layer    | Regular     | 8 cm       | 3 GB  |
+| TLS                              | Classification | Stems               | Boreal      | 10 cm      | 3 GB  |
+| TLS                              | Classification | Stems               | Boreal      | 4 cm       | 3 GB  |
+| TLS                              | Classification | Stems               | Boreal      | 20 cm      | 8 GB  |
+| TLS                              | Classification | Stems               | Regular     | 4 cm       | 12 GB |
+| TLS                              | Classification | Stems + branches    | Regular     | 4 cm       | 2 GB  |
+| TLS                              | Classification | Stems + branches    | Regular     | 2.5 cm     | 3 GB  |
+| ALS (or UAV without stems)       | Clustering     | Tree tops           | Wellsite    | 10 cm      | 4 GB  |
+| ALS (or UAV without stems)       | Clustering     | Tree segments       | Wellsite    | 10 cm      | 4 GB  |
+| UAV (with stems)                 | Clustering     | Tree bases          | Mixedwood   | 10 cm      | 3 GB  |
+| UAV (with stems)                 | Clustering     | Tree segments       | Mixedwood   | 15 cm      | 4 GB  |
+| TLS                              | Clustering     | Tree bases          | Boreal      | 10 cm      | 3 GB  |
+| TLS                              | Clustering     | Tree segments       | Boreal      | 15 cm      | 4 GB  |
+
 
 ---
 
@@ -87,13 +110,11 @@ Then select a point cloud, pick your module tab, choose/download a model, adjust
 1. Fork → feature branch → PR.  
 2. Follow existing style and add tests as needed.
 
----
-
 ### 📄 License
 
 GNU GPL v3 (same as CloudCompare).
 
 ---
+![image](https://github.com/user-attachments/assets/2cac174d-f874-4a4a-bc4d-93c6ee9d4905)
 
-*Built & maintained by Zhouxin Xi & collaborators.*  
-```
+
