@@ -9,25 +9,41 @@ A CloudCompare Python plugin providing a unified web-style GUI for a suite of Li
 TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
 
 - **TreeFiltering**  
-  Supervised deep-learning filtering to separate understory and overstory points .  
+  Supervised deep-learning filtering to separate understory and overstory points.
+  
 - **TreeisoNet**  
-  End-to-end crown segmentation pipeline (StemCls → TreeLoc → TreeOff → CrownOff3D), with optional manual editing .  
+  End-to-end crown segmentation pipeline (StemCls → TreeLoc → TreeOff → CrownOff3D), allowing manual editing.
+  
 - **WoodCls**  
-  3D stem & branch classification on TLS data .  
+  3D stem & branch classification on TLS data.
+  
 - **QSM**  
-  Plot-level skeletonization and export of tree structure to XML/OBJ .
+  Plot-level skeletonization and export of tree structure to XML/OBJ.
 
 ---
 
 ### 🚀 Features
 
-- **Pretrained model management**  
-  Download from a remote server; cached under  
-  `~/.local/share/CloudCompare/TreeAIBox/models` & `logs` .  
+- **20+ pretrained AI models**  
+  Downloadable from a remote server; mostly lightweight or distilled versions, fine-tuned with carefully annotated datasets.
+  
+- **3D targeted**  
+  Operates directly on raw 3D point clouds—no CHM or raster inputs—using voxel-based AI architectures for both training and inference.
+  
+- **Sensor, scene, and resolution options**  
+  Supports TLS, ALS, and UAV LiDAR across boreal, mixedwood, and reclamation forest types.
+  
 - **GPU acceleration toggle**  
+  Runs on either GPU (CUDA) or CPU for flexibility.
+  
+- **Web-style UI framework**  
+  Features resizable windows and modular UI components.
+  
 - **Interactive parameter controls**  
-- **Progress bar** and **notifications**  
-- Results as scalar fields, child clouds, or exported files.
+  Allow certain result customization using adjustable parameters.
+  
+- **Open source**  
+  Fully Python-based (except for pretrained model files); outputs include scalar fields, point clouds, and exportable files.
 
 ---
 
@@ -35,7 +51,7 @@ TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
 
 #### 1. Via Windows Installer
 
-A ready-to-run installer is provided:
+A ready-to-run online installer is provided. Ensure **internet access** is enabled:
 
 1. Download or copy **TreeAIBox_Plugin_Installer.exe** into any folder.  
 2. **Right-click → Run as administrator**.  
@@ -77,31 +93,142 @@ Then select a point cloud, pick your module tab, choose/download a model, adjust
 ### ⚙️ Configuration
 
 - **`model_zoo.json`** lists available model names.  
-- Logs & outputs in `C:\Users\YOURNAME\AppData\Local\CloudCompare\TreeAIBox\`.
+- Logs & outputs in `C:\Users\USERNAME\AppData\Local\CloudCompare\TreeAIBox\`.
 
-The table below summarizes the voxel resolution and GPU memory requirements of current AI models, categorized by sensor type, task, component, and scene:
+The table below summarizes the voxel resolution and GPU memory used by the current AI models, categorized by sensor type, task, component, and scene:
 
-| Sensor                           | Task           | Component           | Scene       | Resolution | VRAM  |
-|:---------------------------------|:---------------|:--------------------|:------------|:-----------|:------|
-| ALS (or UAV without stems)       | Classification | Vegetation layer    | Mountainous | 80 cm      | 3 GB  |
-| ALS (or UAV without stems)       | Classification | Vegetation layer    | Regular     | 50 cm      | 3 GB  |
-| ALS (or UAV without stems)       | Classification | Vegetation layer    | Wellsite    | 15 cm      | 3 GB  |
-| UAV (with stems)                 | Classification | Vegetation layer    | Regular     | 12 cm      | 3 GB  |
-| UAV (with stems)                 | Classification | Stems               | Mixedwood   | 8 cm       | 3 GB  |
-| TLS                              | Classification | Vegetation layer    | Regular     | 8 cm       | 3 GB  |
-| TLS                              | Classification | Stems               | Boreal      | 10 cm      | 3 GB  |
-| TLS                              | Classification | Stems               | Boreal      | 4 cm       | 3 GB  |
-| TLS                              | Classification | Stems               | Boreal      | 20 cm      | 8 GB  |
-| TLS                              | Classification | Stems               | Regular     | 4 cm       | 12 GB |
-| TLS                              | Classification | Stems + branches    | Regular     | 4 cm       | 2 GB  |
-| TLS                              | Classification | Stems + branches    | Regular     | 2.5 cm     | 3 GB  |
-| ALS (or UAV without stems)       | Clustering     | Tree tops           | Wellsite    | 10 cm      | 4 GB  |
-| ALS (or UAV without stems)       | Clustering     | Tree segments       | Wellsite    | 10 cm      | 4 GB  |
-| UAV (with stems)                 | Clustering     | Tree bases          | Mixedwood   | 10 cm      | 3 GB  |
-| UAV (with stems)                 | Clustering     | Tree segments       | Mixedwood   | 15 cm      | 4 GB  |
-| TLS                              | Clustering     | Tree bases          | Boreal      | 10 cm      | 3 GB  |
-| TLS                              | Clustering     | Tree segments       | Boreal      | 15 cm      | 4 GB  |
-
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; border: 1px solid #ddd;">
+  <thead>
+    <tr style="background-color: #f2f2f2;">
+      <th align="center" style="border: 1px solid #ddd;">Sensor</th>
+      <th align="center" style="border: 1px solid #ddd;">Task</th>
+      <th align="center" style="border: 1px solid #ddd;">Component</th>
+      <th align="center" style="border: 1px solid #ddd;">Scene</th>
+      <th align="center" style="border: 1px solid #ddd;">Resolution</th>
+      <th align="center" style="border: 1px solid #ddd;">VRAM</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- ALS Classification -->
+    <tr style="background-color: #f8f9fa;">
+      <td align="center" rowspan="3" style="border: 1px solid #ddd;">ALS (or UAV without stems)</td>
+      <td align="center" rowspan="3" style="border: 1px solid #ddd;">Classification</td>
+      <td align="center" rowspan="3" style="border: 1px solid #ddd;">Vegetation layer</td>
+      <td align="center" style="border: 1px solid #ddd;">Mountainous</td>
+      <td align="center" style="border: 1px solid #ddd;">80 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td align="center" style="border: 1px solid #ddd;">Regular</td>
+      <td align="center" style="border: 1px solid #ddd;">50 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td align="center" style="border: 1px solid #ddd;">Wellsite</td>
+      <td align="center" style="border: 1px solid #ddd;">15 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    </tr>
+    <!-- UAV Classification -->
+    <tr style="background-color: #e8f4f9;">
+      <td align="center" rowspan="2" style="border: 1px solid #ddd;">UAV (with stems)</td>
+      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Classification</td>
+      <td align="center" style="border: 1px solid #ddd;">Vegetation layer</td>
+      <td align="center" style="border: 1px solid #ddd;">Regular</td>
+      <td align="center" style="border: 1px solid #ddd;">12 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    </tr>
+    <tr style="background-color: #e8f4f9;">
+      <td align="center" style="border: 1px solid #ddd;">Stems</td>
+      <td align="center" style="border: 1px solid #ddd;">Mixedwood</td>
+      <td align="center" style="border: 1px solid #ddd;">8 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    </tr>
+    <!-- TLS Classification -->
+    <tr style="background-color: #f0ebf8;">
+      <td align="center" rowspan="7" style="border: 1px solid #ddd;">TLS</td>
+      <td align="center" rowspan="7" style="border: 1px solid #ddd;">Classification</td>
+      <td align="center" style="border: 1px solid #ddd;">Vegetation layer</td>
+      <td align="center" style="border: 1px solid #ddd;">Regular</td>
+      <td align="center" style="border: 1px solid #ddd;">8 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    </tr>
+    <tr style="background-color: #f0ebf8;">
+      <td align="center" rowspan="3" style="border: 1px solid #ddd;">Stems</td>
+      <td align="center" rowspan="3" style="border: 1px solid #ddd;">Boreal</td>
+      <td align="center" style="border: 1px solid #ddd;">10 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    </tr>
+    <tr style="background-color: #f0ebf8;">
+      <td align="center" style="border: 1px solid #ddd;">4 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    </tr>
+    <tr style="background-color: #f0ebf8;">
+      <td align="center" style="border: 1px solid #ddd;">20 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">8 GB</td>
+    </tr>
+    <tr style="background-color: #f0ebf8;">
+      <td align="center" style="border: 1px solid #ddd;">Stems</td>
+      <td align="center" style="border: 1px solid #ddd;">Regular</td>
+      <td align="center" style="border: 1px solid #ddd;">4 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">12 GB</td>
+    </tr>
+    <tr style="background-color: #f0ebf8;">
+      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Stems + branches</td>
+      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Regular</td>
+      <td align="center" style="border: 1px solid #ddd;">4 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">2 GB</td>
+    </tr>
+    <tr style="background-color: #f0ebf8;">
+      <td align="center" style="border: 1px solid #ddd;">2.5 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    </tr>
+    <!-- ALS Clustering -->
+    <tr style="background-color: #f8f9fa;">
+      <td align="center" rowspan="2" style="border: 1px solid #ddd;">ALS (or UAV without stems)</td>
+      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Clustering</td>
+      <td align="center" style="border: 1px solid #ddd;">Tree tops</td>
+      <td align="center" style="border: 1px solid #ddd;">Wellsite</td>
+      <td align="center" style="border: 1px solid #ddd;">10 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">4 GB</td>
+    </tr>
+    <tr style="background-color: #f8f9fa;">
+      <td align="center" style="border: 1px solid #ddd;">Tree segments</td>
+      <td align="center" style="border: 1px solid #ddd;">Wellsite</td>
+      <td align="center" style="border: 1px solid #ddd;">10 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">4 GB</td>
+    </tr>
+    <!-- UAV Clustering -->
+    <tr style="background-color: #e8f4f9;">
+      <td align="center" rowspan="2" style="border: 1px solid #ddd;">UAV (with stems)</td>
+      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Clustering</td>
+      <td align="center" style="border: 1px solid #ddd;">Tree bases</td>
+      <td align="center" style="border: 1px solid #ddd;">Mixedwood</td>
+      <td align="center" style="border: 1px solid #ddd;">10 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    </tr>
+    <tr style="background-color: #e8f4f9;">
+      <td align="center" style="border: 1px solid #ddd;">Tree segments</td>
+      <td align="center" style="border: 1px solid #ddd;">Mixedwood</td>
+      <td align="center" style="border: 1px solid #ddd;">15 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">4 GB</td>
+    </tr>
+    <!-- TLS Clustering -->
+    <tr style="background-color: #f0ebf8;">
+      <td align="center" rowspan="2" style="border: 1px solid #ddd;">TLS</td>
+      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Clustering</td>
+      <td align="center" style="border: 1px solid #ddd;">Tree bases</td>
+      <td align="center" style="border: 1px solid #ddd;">Boreal</td>
+      <td align="center" style="border: 1px solid #ddd;">10 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    </tr>
+    <tr style="background-color: #f0ebf8;">
+      <td align="center" style="border: 1px solid #ddd;">Tree segments</td>
+      <td align="center" style="border: 1px solid #ddd;">Boreal</td>
+      <td align="center" style="border: 1px solid #ddd;">15 cm</td>
+      <td align="center" style="border: 1px solid #ddd;">4 GB</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
