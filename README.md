@@ -44,7 +44,9 @@ TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
   
 - **Open source**  
   Fully Python-based (except for pretrained model files); outputs include scalar fields, point clouds, and exportable files.
-
+  
+- **Windows installer**  
+  Automatically installs required packages.
 ---
 
 ### 🛠️ Installation
