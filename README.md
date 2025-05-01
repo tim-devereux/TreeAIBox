@@ -99,135 +99,135 @@ Then select a point cloud, pick your module tab, choose/download a model, adjust
 
 The table below summarizes the voxel resolution and GPU memory used by the current AI models, categorized by sensor type, task, component, and scene:
 
-<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; border: 1px solid #ddd;">
+<table>
   <thead>
-    <tr style="background-color: #f2f2f2;">
-      <th align="center" style="border: 1px solid #ddd;">Sensor</th>
-      <th align="center" style="border: 1px solid #ddd;">Task</th>
-      <th align="center" style="border: 1px solid #ddd;">Component</th>
-      <th align="center" style="border: 1px solid #ddd;">Scene</th>
-      <th align="center" style="border: 1px solid #ddd;">Resolution</th>
-      <th align="center" style="border: 1px solid #ddd;">VRAM</th>
+    <tr>
+      <th align="center">Sensor</th>
+      <th align="center">Task</th>
+      <th align="center">Component</th>
+      <th align="center">Scene</th>
+      <th align="center">Resolution</th>
+      <th align="center">VRAM</th>
     </tr>
   </thead>
   <tbody>
     <!-- ALS Classification -->
-    <tr style="background-color: #f8f9fa;">
-      <td align="center" rowspan="3" style="border: 1px solid #ddd;">ALS (or UAV without stems)</td>
-      <td align="center" rowspan="3" style="border: 1px solid #ddd;">Classification</td>
-      <td align="center" rowspan="3" style="border: 1px solid #ddd;">Vegetation layer</td>
-      <td align="center" style="border: 1px solid #ddd;">Mountainous</td>
-      <td align="center" style="border: 1px solid #ddd;">80 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    <tr>
+      <td align="center" rowspan="3"><strong>ALS (or UAV without stems)</strong></td>
+      <td align="center" rowspan="3">Classification</td>
+      <td align="center" rowspan="3">Vegetation layer</td>
+      <td align="center">Mountainous</td>
+      <td align="center">80 cm</td>
+      <td align="center">3 GB</td>
     </tr>
-    <tr style="background-color: #f8f9fa;">
-      <td align="center" style="border: 1px solid #ddd;">Regular</td>
-      <td align="center" style="border: 1px solid #ddd;">50 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    <tr>
+      <td align="center">Regular</td>
+      <td align="center">50 cm</td>
+      <td align="center">3 GB</td>
     </tr>
-    <tr style="background-color: #f8f9fa;">
-      <td align="center" style="border: 1px solid #ddd;">Wellsite</td>
-      <td align="center" style="border: 1px solid #ddd;">15 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    <tr>
+      <td align="center">Wellsite</td>
+      <td align="center">15 cm</td>
+      <td align="center">3 GB</td>
     </tr>
     <!-- UAV Classification -->
-    <tr style="background-color: #e8f4f9;">
-      <td align="center" rowspan="2" style="border: 1px solid #ddd;">UAV (with stems)</td>
-      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Classification</td>
-      <td align="center" style="border: 1px solid #ddd;">Vegetation layer</td>
-      <td align="center" style="border: 1px solid #ddd;">Regular</td>
-      <td align="center" style="border: 1px solid #ddd;">12 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    <tr>
+      <td align="center" rowspan="2"><strong>UAV (with stems)</strong></td>
+      <td align="center" rowspan="2">Classification</td>
+      <td align="center">Vegetation layer</td>
+      <td align="center">Regular</td>
+      <td align="center">12 cm</td>
+      <td align="center">3 GB</td>
     </tr>
-    <tr style="background-color: #e8f4f9;">
-      <td align="center" style="border: 1px solid #ddd;">Stems</td>
-      <td align="center" style="border: 1px solid #ddd;">Mixedwood</td>
-      <td align="center" style="border: 1px solid #ddd;">8 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    <tr>
+      <td align="center">Stems</td>
+      <td align="center">Mixedwood</td>
+      <td align="center">8 cm</td>
+      <td align="center">3 GB</td>
     </tr>
     <!-- TLS Classification -->
-    <tr style="background-color: #f0ebf8;">
-      <td align="center" rowspan="7" style="border: 1px solid #ddd;">TLS</td>
-      <td align="center" rowspan="7" style="border: 1px solid #ddd;">Classification</td>
-      <td align="center" style="border: 1px solid #ddd;">Vegetation layer</td>
-      <td align="center" style="border: 1px solid #ddd;">Regular</td>
-      <td align="center" style="border: 1px solid #ddd;">8 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    <tr>
+      <td align="center" rowspan="7"><strong>TLS</strong></td>
+      <td align="center" rowspan="7">Classification</td>
+      <td align="center">Vegetation layer</td>
+      <td align="center">Regular</td>
+      <td align="center">8 cm</td>
+      <td align="center">3 GB</td>
     </tr>
-    <tr style="background-color: #f0ebf8;">
-      <td align="center" rowspan="3" style="border: 1px solid #ddd;">Stems</td>
-      <td align="center" rowspan="3" style="border: 1px solid #ddd;">Boreal</td>
-      <td align="center" style="border: 1px solid #ddd;">10 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    <tr>
+      <td align="center" rowspan="3">Stems</td>
+      <td align="center" rowspan="3">Boreal</td>
+      <td align="center">10 cm</td>
+      <td align="center">3 GB</td>
     </tr>
-    <tr style="background-color: #f0ebf8;">
-      <td align="center" style="border: 1px solid #ddd;">4 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    <tr>
+      <td align="center">4 cm</td>
+      <td align="center">3 GB</td>
     </tr>
-    <tr style="background-color: #f0ebf8;">
-      <td align="center" style="border: 1px solid #ddd;">20 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">8 GB</td>
+    <tr>
+      <td align="center">20 cm</td>
+      <td align="center">8 GB</td>
     </tr>
-    <tr style="background-color: #f0ebf8;">
-      <td align="center" style="border: 1px solid #ddd;">Stems</td>
-      <td align="center" style="border: 1px solid #ddd;">Regular</td>
-      <td align="center" style="border: 1px solid #ddd;">4 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">12 GB</td>
+    <tr>
+      <td align="center">Stems</td>
+      <td align="center">Regular</td>
+      <td align="center">4 cm</td>
+      <td align="center">12 GB</td>
     </tr>
-    <tr style="background-color: #f0ebf8;">
-      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Stems + branches</td>
-      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Regular</td>
-      <td align="center" style="border: 1px solid #ddd;">4 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">2 GB</td>
+    <tr>
+      <td align="center" rowspan="2">Stems + branches</td>
+      <td align="center" rowspan="2">Regular</td>
+      <td align="center">4 cm</td>
+      <td align="center">2 GB</td>
     </tr>
-    <tr style="background-color: #f0ebf8;">
-      <td align="center" style="border: 1px solid #ddd;">2.5 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    <tr>
+      <td align="center">2.5 cm</td>
+      <td align="center">3 GB</td>
     </tr>
     <!-- ALS Clustering -->
-    <tr style="background-color: #f8f9fa;">
-      <td align="center" rowspan="2" style="border: 1px solid #ddd;">ALS (or UAV without stems)</td>
-      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Clustering</td>
-      <td align="center" style="border: 1px solid #ddd;">Tree tops</td>
-      <td align="center" style="border: 1px solid #ddd;">Wellsite</td>
-      <td align="center" style="border: 1px solid #ddd;">10 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">4 GB</td>
+    <tr>
+      <td align="center" rowspan="2"><strong>ALS (or UAV without stems)</strong></td>
+      <td align="center" rowspan="2">Clustering</td>
+      <td align="center">Tree tops</td>
+      <td align="center">Wellsite</td>
+      <td align="center">10 cm</td>
+      <td align="center">4 GB</td>
     </tr>
-    <tr style="background-color: #f8f9fa;">
-      <td align="center" style="border: 1px solid #ddd;">Tree segments</td>
-      <td align="center" style="border: 1px solid #ddd;">Wellsite</td>
-      <td align="center" style="border: 1px solid #ddd;">10 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">4 GB</td>
+    <tr>
+      <td align="center">Tree segments</td>
+      <td align="center">Wellsite</td>
+      <td align="center">10 cm</td>
+      <td align="center">4 GB</td>
     </tr>
     <!-- UAV Clustering -->
-    <tr style="background-color: #e8f4f9;">
-      <td align="center" rowspan="2" style="border: 1px solid #ddd;">UAV (with stems)</td>
-      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Clustering</td>
-      <td align="center" style="border: 1px solid #ddd;">Tree bases</td>
-      <td align="center" style="border: 1px solid #ddd;">Mixedwood</td>
-      <td align="center" style="border: 1px solid #ddd;">10 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    <tr>
+      <td align="center" rowspan="2"><strong>UAV (with stems)</strong></td>
+      <td align="center" rowspan="2">Clustering</td>
+      <td align="center">Tree bases</td>
+      <td align="center">Mixedwood</td>
+      <td align="center">10 cm</td>
+      <td align="center">3 GB</td>
     </tr>
-    <tr style="background-color: #e8f4f9;">
-      <td align="center" style="border: 1px solid #ddd;">Tree segments</td>
-      <td align="center" style="border: 1px solid #ddd;">Mixedwood</td>
-      <td align="center" style="border: 1px solid #ddd;">15 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">4 GB</td>
+    <tr>
+      <td align="center">Tree segments</td>
+      <td align="center">Mixedwood</td>
+      <td align="center">15 cm</td>
+      <td align="center">4 GB</td>
     </tr>
     <!-- TLS Clustering -->
-    <tr style="background-color: #f0ebf8;">
-      <td align="center" rowspan="2" style="border: 1px solid #ddd;">TLS</td>
-      <td align="center" rowspan="2" style="border: 1px solid #ddd;">Clustering</td>
-      <td align="center" style="border: 1px solid #ddd;">Tree bases</td>
-      <td align="center" style="border: 1px solid #ddd;">Boreal</td>
-      <td align="center" style="border: 1px solid #ddd;">10 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">3 GB</td>
+    <tr>
+      <td align="center" rowspan="2"><strong>TLS</strong></td>
+      <td align="center" rowspan="2">Clustering</td>
+      <td align="center">Tree bases</td>
+      <td align="center">Boreal</td>
+      <td align="center">10 cm</td>
+      <td align="center">3 GB</td>
     </tr>
-    <tr style="background-color: #f0ebf8;">
-      <td align="center" style="border: 1px solid #ddd;">Tree segments</td>
-      <td align="center" style="border: 1px solid #ddd;">Boreal</td>
-      <td align="center" style="border: 1px solid #ddd;">15 cm</td>
-      <td align="center" style="border: 1px solid #ddd;">4 GB</td>
+    <tr>
+      <td align="center">Tree segments</td>
+      <td align="center">Boreal</td>
+      <td align="center">15 cm</td>
+      <td align="center">4 GB</td>
     </tr>
   </tbody>
 </table>
