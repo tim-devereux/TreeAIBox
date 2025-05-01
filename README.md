@@ -3,7 +3,6 @@
 
 A CloudCompare Python plugin providing a unified web-style GUI for a suite of LiDAR processing modules targeting forest and tree analysis.
 
-
 ### 📖 Overview
 
 TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
@@ -46,41 +45,44 @@ TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
   Fully Python-based (except for pretrained model files); outputs include scalar fields, point clouds, and exportable files.
   
 - **Windows installer**  
-  Automatically installs required packages.
+  Automatically installs required packages and registers the main script as a Python plugin.
 ---
 
 ### 🛠️ Installation
 
-#### 1. Via Windows Installer
+#### 1. Via Windows installer (Suggested)
 
 A ready-to-run online installer is provided. Ensure **internet access** is enabled:
 
 1. Download or copy **TreeAIBox_Plugin_Installer.exe** into any folder.  
-2. **Right-click → Run as administrator**.  
-3. Follow the prompts; by default it installs into your CloudCompare folder (`%PROGRAMFILES%\CloudCompare`).  
+2. **Right-click → Run as administrator** (suggested).  
+3. Follow the prompts; by default it detects your CloudCompare folder (e.g., `%PROGRAMFILES%\CloudCompare`) based on the registry.  
 4. The installer will:
    - Copy all Python scripts, UI files, images, and modules into  
      `…\CloudCompare\plugins\Python\Plugins\TreeAIBox\`  
-   - Generate a helper batch to detect NVIDIA GPU and install the correct PyTorch wheel.  
+   - Generate a helper batch to detect NVIDIA GPU and install the correct PyTorch wheel. (Please keep patient)
    - Launch `pip` to install required Python packages (PyQt6, torch, requests, etc.).  
 
 Once it finishes, restart CloudCompare and launch the plugin from the Python console.
 
 > **Note:** The NSIS script (`CloudCompare_Python_Plugin.nsi`) can be edited if you need to customize install paths or package versions.
 
-#### 2. Manual (Git + pip)
+#### 2. Alternatively, manual (Git + pip)
 
 ```bash
 cd %PROGRAMFILES%\CloudCompare\plugins\Python\Plugins
 git clone https://github.com/truebelief/cc-TreeAIBox-plugin-test TreeAIBox
 pip install PyQt6 PyQt6-WebEngine numpy torch requests
 ```
+In CloudCompare, register the TreeAIBox.py by clicking the Add Script button under the Script Register menu.
 
 ---
 
 ### ▶️ Usage
 
-In CloudCompare, register the TreeAIBox.py under Script Register, and click the TreeAIBox.
+In CloudCompare, under Script Register, click the TreeAIBox.
+
+![image](https://github.com/user-attachments/assets/f76865eb-ba91-4516-85b7-42c08d10ccb5)
 
 Then select a point cloud, pick your module tab, choose/download a model, adjust settings, and click **Apply**.
 
@@ -243,7 +245,11 @@ The table below summarizes the voxel resolution and GPU memory used by the curre
 
 GNU GPL v3 (same as CloudCompare).
 
+Developed by Zhouxin Xi, tested by Charumitha Selvaraj
+
 ---
+*Born from over a decade of LiDAR research with support from dedicated collaborators.*
+
 ![image](https://github.com/user-attachments/assets/2cac174d-f874-4a4a-bc4d-93c6ee9d4905)
 
 
