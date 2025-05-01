@@ -44,7 +44,136 @@ Page custom CCPathSelection CCPathSelectionLeave
 ; Languages
 !insertmacro MUI_LANGUAGE "English"
 
-; Use existing license file
+; String contains macro
+!macro StrContains ResultVar String SubString
+  Push `${String}`
+  Push `${SubString}`
+  Call StrContains
+  Pop `${ResultVar}`
+!macroend
+!define StrContains "!insertmacro StrContains"
+
+; Try to find CloudCompare installation
+Function FindCloudCompare
+    Push $R0
+    Push $R1
+    Push $R2
+    
+    DetailPrint "Searching for CloudCompare..."
+    
+    ; Initialize variables
+    StrCpy $CCPathFound "0"
+    StrCpy $PythonPathFound "0"
+    
+    ; Method 1: Check CloudCompare Python Runtime Settings - For users who have used the plugin before
+    DetailPrint "Checking Python Runtime Settings in registry..."
+    ReadRegStr $0 HKCU "SOFTWARE\CCCorp\CloudCompare:PythonRuntime.Settings" "EnvPath"
+    ${If} $0 != ""
+        DetailPrint "Found Python EnvPath: $0"
+        ; EnvPath typically points to the Python folder inside CloudCompare plugins
+        ${GetParent} $0 $1        ; Get plugins folder
+        ${GetParent} $1 $2        ; Get CloudCompare folder
+        
+        ; Verify it's CloudCompare
+        IfFileExists "$2\CloudCompare.exe" 0 Check_Registry
+        StrCpy $CCPath $2
+        StrCpy $CCPathFound "1"
+        
+        StrCpy $PythonPath "$0\python.exe"
+        IfFileExists "$PythonPath" 0 Check_Python
+        StrCpy $PythonPathFound "1"
+        DetailPrint "Python found at: $PythonPath"
+        Goto Finish
+    ${EndIf}
+    
+    Check_Registry:
+    ; Method 2: Check Uninstall registry entries
+    DetailPrint "Checking Uninstall registry entries..."
+    StrCpy $R0 "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
+    
+    ; Enumerate all subkeys to find CloudCompare
+    StrCpy $R1 0
+    
+    Registry_Loop:
+        EnumRegKey $R2 HKLM $R0 $R1
+        StrCmp $R2 "" Check_Standard_Paths
+        IntOp $R1 $R1 + 1
+        
+        ; Check if this entry contains "_is1" (typical for InnoSetup installers like CloudCompare)
+        ${StrContains} $1 "_is1" $R2
+        ${If} $1 != "-1"
+            ; Read the DisplayIcon value to find the path
+            ReadRegStr $0 HKLM "$R0\$R2" "DisplayIcon"
+            ${If} $0 != ""
+                ; DisplayIcon typically contains the full path to the executable with parameters
+                ; We need to extract just the path
+                ${GetParent} $0 $1
+                
+                ; Verify it's CloudCompare
+                IfFileExists "$1\CloudCompare.exe" 0 Registry_Loop
+                StrCpy $CCPath $1
+                StrCpy $CCPathFound "1"
+                DetailPrint "CloudCompare found at: $CCPath"
+                Goto Check_Python
+            ${EndIf}
+        ${EndIf}
+        
+        ; Check if DisplayName contains "CloudCompare"
+        ReadRegStr $0 HKLM "$R0\$R2" "DisplayName"
+        ${If} $0 != ""
+            ${StrContains} $1 "CloudCompare" $0
+            ${If} $1 != "-1"
+                ; This entry is for CloudCompare, now get the install location
+                ReadRegStr $0 HKLM "$R0\$R2" "InstallLocation"
+                ${If} $0 != ""
+                    ; Verify it's CloudCompare
+                    IfFileExists "$0\CloudCompare.exe" 0 Registry_Loop
+                    StrCpy $CCPath $0
+                    StrCpy $CCPathFound "1"
+                    DetailPrint "CloudCompare found at: $CCPath"
+                    Goto Check_Python
+                ${EndIf}
+            ${EndIf}
+        ${EndIf}
+        
+        Goto Registry_Loop
+    
+    Check_Standard_Paths:
+    ; Method 3: Try standard paths as fallback
+    DetailPrint "Checking standard installation paths..."
+    
+    ${If} ${FileExists} "C:\Program Files\CloudCompare\CloudCompare.exe"
+        StrCpy $CCPath "C:\Program Files\CloudCompare"
+        StrCpy $CCPathFound "1"
+    ${ElseIf} ${FileExists} "$PROGRAMFILES\CloudCompare\CloudCompare.exe"
+        StrCpy $CCPath "$PROGRAMFILES\CloudCompare"
+        StrCpy $CCPathFound "1"
+    ${ElseIf} ${FileExists} "E:\CloudCompare\CloudCompare.exe"
+        StrCpy $CCPath "E:\CloudCompare"
+        StrCpy $CCPathFound "1"
+    ${EndIf}
+    
+    ${If} $CCPathFound == "1"
+        DetailPrint "CloudCompare found at: $CCPath (from standard path)"
+    ${Else}
+        DetailPrint "CloudCompare not found automatically"
+        Goto Finish
+    ${EndIf}
+    
+    Check_Python:
+    ; Check for Python in CloudCompare
+    StrCpy $PythonPath "$CCPath\plugins\Python\python.exe"
+    IfFileExists "$PythonPath" 0 Finish
+    StrCpy $PythonPathFound "1"
+    DetailPrint "Python found at: $PythonPath"
+    
+    Finish:
+    Pop $R2
+    Pop $R1
+    Pop $R0
+FunctionEnd
+
+; Use existing license file or create a basic one
 Function .onInit
     IfFileExists "LICENSE.txt" +3 0
     FileOpen $0 "LICENSE.txt" w
@@ -63,19 +192,12 @@ Function .onInit
     FileOpen $0 "$TEMP\check_nvidia.bat" w
     FileWrite $0 '@echo off$\r$\n'
     FileWrite $0 'wmic path win32_VideoController get name | findstr /i "NVIDIA" > nul$\r$\n'
-    FileWrite $0 'if %ERRORLEVEL% EQU 0 ($\r$\n'
-    FileWrite $0 '  echo NVIDIA GPU found$\r$\n'
-    FileWrite $0 '  exit 0$\r$\n'
-    FileWrite $0 ') else ($\r$\n'
-    FileWrite $0 '  echo No NVIDIA GPU found$\r$\n'
-    FileWrite $0 '  exit 1$\r$\n'
-    FileWrite $0 ')$\r$\n'
+    FileWrite $0 'if %ERRORLEVEL% EQU 0 (exit 0) else (exit 1)$\r$\n'
     FileClose $0
     
     ; Run the batch file and capture result
     nsExec::ExecToStack '"$TEMP\check_nvidia.bat"'
     Pop $0 ; Return value
-    Pop $1 ; Output
     
     ; Set the GPU flag based on result
     ${If} $0 == "0"
@@ -89,39 +211,7 @@ Function .onInit
     Delete "$TEMP\check_nvidia.bat"
     
     ; Try to find CloudCompare installation
-    FindCloudCompare:
-    ; Check common installation paths
-
-    IfFileExists "C:\Program Files\CloudCompare\CloudCompare.exe" 0 +2
-    StrCpy $CCPath "C:\Program Files\CloudCompare"
-
-    IfFileExists "$PROGRAMFILES\CloudCompare\CloudCompare.exe" 0 +2
-    StrCpy $CCPath "$PROGRAMFILES\CloudCompare"
-    
-    IfFileExists "$PROGRAMFILES32\CloudCompare\CloudCompare.exe" 0 +2
-    StrCpy $CCPath "$PROGRAMFILES32\CloudCompare"
-    
-    IfFileExists "$LOCALAPPDATA\Programs\CloudCompare\CloudCompare.exe" 0 +2
-    StrCpy $CCPath "$LOCALAPPDATA\Programs\CloudCompare"
-    
-    ; Check in Registry
-    ReadRegStr $0 HKLM "SOFTWARE\CloudCompare" "InstallPath"
-    ${If} $0 != ""
-        IfFileExists "$0\CloudCompare.exe" 0 +2
-        StrCpy $CCPath "$0"
-    ${EndIf}
-    
-    ; Check if CloudCompare was found
-    ${If} $CCPath != ""
-        StrCpy $CCPathFound "1"
-    ${EndIf}
-    
-    ; Check if Python exists in the found CloudCompare path
-    ${If} $CCPathFound == "1"
-        IfFileExists "$CCPath\plugins\Python\python.exe" 0 +2
-        StrCpy $PythonPathFound "1"
-        StrCpy $PythonPath "$CCPath\plugins\Python\python.exe"
-    ${EndIf}
+    Call FindCloudCompare
 FunctionEnd
 
 ; Custom page to select CloudCompare path
@@ -213,6 +303,69 @@ Function CCPathSelectionLeave
     Abort
 FunctionEnd
 
+Function StrContains
+  Exch $R1 ; SubString
+  Exch
+  Exch $R2 ; String
+  Push $R3
+  Push $R4
+  Push $R5
+  
+  StrLen $R3 $R1 ; Length of SubString
+  StrCpy $R4 0
+  
+  loop:
+    StrCpy $R5 $R2 $R3 $R4 ; Copy part of String
+    StrCmp $R5 $R1 done ; If equal to SubString, done
+    StrCmp $R5 "" done ; If at end of String, done
+    IntOp $R4 $R4 + 1 ; Increase offset
+    Goto loop
+  
+  done:
+    StrCmp $R5 "" notFound ; If at end of String, not found
+    StrCpy $R0 $R4 ; Return position
+    Goto return
+  
+  notFound:
+    StrCpy $R0 -1 ; Return -1 if not found
+  
+  return:
+    Pop $R5
+    Pop $R4
+    Pop $R3
+    Pop $R1
+    Exch $R0 ; Return value on stack
+    Exch
+    Pop $R2
+FunctionEnd
+
+; Function to convert backslashes to forward slashes
+Function ConvertToForwardSlashes
+    Exch $R0 ; get the path
+    Push $R1
+    Push $R2
+    
+    StrCpy $R1 0
+    
+    loop:
+        StrCpy $R2 $R0 1 $R1
+        StrCmp $R2 "" done
+        StrCmp $R2 "\" replaceChar
+        IntOp $R1 $R1 + 1
+        Goto loop
+    
+    replaceChar:
+        StrCpy $R2 $R0 $R1
+        IntOp $R1 $R1 + 1
+        StrCpy $R0 "$R2/$R0" "" $R1
+        Goto loop
+    
+    done:
+        Pop $R2
+        Pop $R1
+        Exch $R0
+FunctionEnd
+
 Section "Install Python Packages" SecInstall
     SetOutPath "$CCPath\plugins\Python"
     
@@ -236,11 +389,7 @@ Section "Install Python Packages" SecInstall
     ; Install other required packages
     FileWrite $0 'echo Installing other required packages...$\r$\n'
     FileWrite $0 '"$PythonPath" -m pip install PyQt6 PyQt6-WebEngine requests numpy_indexed timm numpy_groupies cut_pursuit_py circle_fit scikit-learn$\r$\n'
-    FileWrite $0 'if %ERRORLEVEL% NEQ 0 ($\r$\n'
-    FileWrite $0 '  echo Installation failed with error code %ERRORLEVEL%$\r$\n'
-    FileWrite $0 '  exit /b %ERRORLEVEL%$\r$\n'
-    FileWrite $0 ')$\r$\n'
-    FileWrite $0 'echo Installation successful$\r$\n'
+    FileWrite $0 'if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%$\r$\n'
     FileClose $0
     
     ; Run the batch file and capture output
@@ -269,13 +418,12 @@ Section "Install Python Packages" SecInstall
     File "treeaibox_ui.html"
     File "dl_visualization.svg"
     
-    ; Create and copy img directory
+    ; Create and copy directories with their contents
     SetOutPath "$CCPath\plugins\Python\Plugins\TreeAIBox\img"
     File /nonfatal "img\*.png"
     File /nonfatal "img\*.jpg"
     File /nonfatal "img\*.svg"
     
-    ; Create and copy modules directory
     SetOutPath "$CCPath\plugins\Python\Plugins\TreeAIBox\modules\filter"
     File /nonfatal "modules\filter\*.py"
     File /nonfatal "modules\filter\*.json"
@@ -288,4 +436,49 @@ Section "Install Python Packages" SecInstall
     File /nonfatal "modules\treeisonet\*.json"
     
     DetailPrint "Installation complete"
+SectionEnd
+
+Section "Register TreeAIBox Script" SecRegister
+    DetailPrint "Registering TreeAIBox script with CloudCompare..."
+    
+    ; Get the script path with forward slashes for CloudCompare
+    Push "$CCPath\plugins\Python\Plugins\TreeAIBox\TreeAIBox.py"
+    Call ConvertToForwardSlashes
+    Pop $R0
+    
+    DetailPrint "Script path: $R0"
+    
+    ; Check if file exists
+    IfFileExists "$CCPath\plugins\Python\Plugins\TreeAIBox\TreeAIBox.py" +2 RegisterFailed
+    DetailPrint "Script file found."
+    
+    ; Read existing registry value if it exists
+    ReadRegStr $R1 HKCU "SOFTWARE\CCCorp\CloudCompare:PythonRuntime.Settings" "RegisterListPath"
+    
+    ${If} $R1 == ""
+        ; No existing paths, just add our path
+        WriteRegStr HKCU "SOFTWARE\CCCorp\CloudCompare:PythonRuntime.Settings" "RegisterListPath" "$R0"
+        DetailPrint "Created new registry entry with path: $R0"
+    ${Else}
+        DetailPrint "Found existing registry value: $R1"
+        
+        ; Check if our path is already in the list
+        ${StrContains} $R2 "$R0" "$R1"
+        ${If} $R2 == "-1"
+            ; Not found, append our path
+            StrCpy $R1 "$R1;$R0"
+            WriteRegStr HKCU "SOFTWARE\CCCorp\CloudCompare:PythonRuntime.Settings" "RegisterListPath" "$R1"
+            DetailPrint "Added path to existing registry entry: $R1"
+        ${Else}
+            DetailPrint "Path already exists in registry"
+        ${EndIf}
+    ${EndIf}
+    
+    Goto RegisterEnd
+    
+    RegisterFailed:
+    DetailPrint "Failed to register script - script file not found"
+    MessageBox MB_ICONEXCLAMATION "Failed to register TreeAIBox script with CloudCompare. Script file not found."
+    
+    RegisterEnd:
 SectionEnd
