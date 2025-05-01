@@ -8,6 +8,7 @@
 ## 🟠 Medium Priority
 - [ ] Improve CloudCompare plugin UI
 - [ ] Generate `TreeAIBox` installers for multiple OS platforms
+- [ ] Provide standalone Python examples directly.
 
 ## 🟢 Low Priority
 - [ ] Tidy up legacy scripts
