@@ -236,6 +236,51 @@ The table below summarizes the voxel resolution and GPU memory used by the curre
 
 ---
 
+### Folder structure
+
+```
+TreeAIBox-main
+│   TreeAIBox_Plugin_Installer.exe                                  # Windows installer for the plugin
+│   CloudCompare_Python_Plugin.nsi                                  # Configuration of the plugin installer
+│   treeaibox-header.jpg                                            # Installer icon
+│   treeaibox-welcome.jpg                                           # Installer icon
+│   dl_visualization.svg                                            # The main DL network structure illustration
+│   LICENSE.txt                                                     # License file
+│   model_zoo.json                                                  # List of available trained DL model file names
+│   README.md                                                       # README
+│   TODO.md                                                         # To-do list
+│   TreeAIBox.py                                                    # Main python program of TreeAIBox
+│   treeaibox_logo.ico                                              # Plugin logo
+│   treeaibox_ui.html                                               # Main GUI (web view)
+├───img                                                             # Icons and images used by the plugin GUI
+└───modules                                                         # Submodules of TreeAIBox
+    ├───filter                                                      # TreeFiltering and WoodCls modules
+    │       componentFilter.py                                      # Functions of filtering tree layer, branch, and stem components
+    │       createDTM.py                                            # Functions of creating DTM grid points based on the filtered tree and ground layers
+    │       *.json                                                  # Definition of DL model parameters
+    │       vox3DESegFormer.py                                      # DL model structure (version 2)
+    │       vox3DSegFormer.py                                       # DL model structure (version 1)
+    │       __init__.py
+    │
+    ├───qsm                                                         # QSM module
+    │       applyQSM.py                                             # Functions of skeletonizing and reconstructing 3D tree geometries
+    │       __init__.py
+    │
+    └───treeisonet
+            cleanSmallerClusters.py                                 # Functions of roughly removing small clusters based on point number
+            treeLoc.py                                              # Functions of extracing stem locations or tree tops
+            treeOff.py                                              # Functions of clustering crown points to the extracted tree tops (for the stem-invisible scene)
+            stemCluster.py                                          # Functions of clustering stem points to the stem locations based on the shortest path rule
+            crownCluster.py                                         # Functions of clustering crown points to the segmented stem points based on the shortest path rule
+            crownOff.py                                             # Functions of clustering crown points to the segmented stem points based on deep learning clustering
+            treeStat.py                                             # Functions of extracting individual-tree and plot-level statistics
+            *.json                                                  # Definition of DL model parameters
+            vox3DSegFormerDetection.py                              # DL model structure of tree location detection
+            vox3DSegFormerRegression.py                             # DL model structure of point offset regression
+            __init__.py
+```
+---
+
 ### 🤝 Contributing
 
 1. Fork → feature branch → PR.  
