@@ -108,7 +108,8 @@ class WebInterface(QObject):
             self.model_names = json.load(f)
 
         # Server path for models
-        self.model_server_path = "http://xizhouxin.com/static/treeaibox/"
+        # self.model_server_path = "http://xizhouxin.com/static/treeaibox/"
+        self.model_server_path = "https://github.com/truebelief/TreeAIBox/releases/download/v1.0/"
 
         # Check CUDA availability
         self.is_cuda_available = torch.cuda.is_available()
