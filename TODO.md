@@ -9,6 +9,7 @@
 - [ ] Improve CloudCompare plugin UI
 - [ ] Generate `TreeAIBox` installers for multiple OS platforms
 - [ ] Provide standalone Python examples directly.
+- [ ] Add a refinement button to enable individual crown addition by mouse clicking.
 
 ## 🟢 Low Priority
 - [ ] Tidy up legacy scripts
