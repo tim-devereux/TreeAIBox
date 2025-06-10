@@ -1,12 +1,12 @@
-([Français](#plugin-treeaibox-pour-cloudcompare))
+([Français](plugin-treeaibox-pour-cloudcompare))
 
-## TreeAIBox CloudCompare Plugin
+# <img src="https://github.com/user-attachments/assets/2ac22555-917d-45ab-873d-120618e66e76" alt="treeaibox_logo" width="32"/> TreeAIBox CloudCompare Plugin
 
 A CloudCompare Python plugin providing a unified web-style GUI for a suite of LiDAR processing modules targeting forest and tree analysis.
 
 It enables forestry practitioners and researchers to interactively process 3D LiDAR data within the open-source CloudCompare software.
 
-### 📖 Overview
+## 📖 Overview
 
 TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
 
@@ -22,9 +22,8 @@ TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
 - **QSM**  
   Plot-level skeletonization and export of tree structure to XML/OBJ.
 
-#
 
-### 🚀 Features
+## 🚀 Features
 
 - **20+ pretrained AI models**  
   Downloadable from a remote server; mostly lightweight or distilled versions, fine-tuned with carefully annotated datasets.
@@ -49,10 +48,10 @@ TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
   
 - **Windows installer**  
   Automatically installs required packages and registers the main script as a Python plugin.
-#
-### 🛠️ Installation
 
-#### 1. Via Windows installer (Suggested)
+## 🛠️ Installation
+
+### 1. Via Windows installer (Suggested)
 
 A ready-to-run online installer is provided. Ensure **internet access** is enabled:
 
@@ -69,7 +68,7 @@ Once it finishes, restart CloudCompare and launch the plugin from the Python con
 
 > **Note:** The NSIS script (`CloudCompare_Python_Plugin.nsi`) can be edited if you need to customize install paths or package versions.
 
-#### 2. Alternatively, manual (Git + pip)
+### 2. Alternatively, manual (Git + pip)
 
 ```bash
 cd %PROGRAMFILES%\CloudCompare\plugins\Python\Plugins
@@ -78,9 +77,8 @@ pip install PyQt6 PyQt6-WebEngine numpy torch requests
 ```
 In CloudCompare, register the TreeAIBox.py by clicking the Add Script button under the Script Register menu.
 
-#
 
-### ▶️ Usage
+## ▶️ Usage
 
 In CloudCompare, under Script Register, click the TreeAIBox.
 
@@ -94,9 +92,8 @@ Then select a point cloud, pick your module tab, choose/download a model, adjust
 ![QSM](https://github.com/user-attachments/assets/aa1a0bc8-febe-41d1-8bdb-f952970b5017)
 
 
-#
 
-### ⚙️ Configuration
+## ⚙️ Configuration
 
 - **`model_zoo.json`** lists available model names.  
 - Logs & outputs in `C:\Users\USERNAME\AppData\Local\CloudCompare\TreeAIBox\`.
@@ -236,9 +233,8 @@ The table below summarizes the voxel resolution and GPU memory used by the curre
   </tbody>
 </table>
 
-#
 
-### 🗂️ Folder structure
+## 🗂️ Folder structure
 
 ```
 TreeAIBox-main
@@ -281,9 +277,8 @@ TreeAIBox-main
             vox3DSegFormerRegression.py                             # DL model structure of point offset regression
             __init__.py
 ```
-#
 
-### 🤝 How to Contribute
+## 🤝 How to Contribute
 
 1. Fork → feature branch → PR.  
 2. Follow existing style and add tests as needed.
@@ -291,7 +286,7 @@ TreeAIBox-main
 See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 
-### 📄 License
+## 📄 License
 
 Unless otherwise noted, the source code of this project is covered under Crown Copyright, Government of Canada, and is distributed under the [GNU GPL v3](LICENSE.txt).
 
@@ -306,16 +301,13 @@ Developed by Zhouxin Xi, tested by Charumitha Selvaraj
 
 ---
 
-#
-
-
-## Plugin TreeAIBox pour CloudCompare
+# <img src="https://github.com/user-attachments/assets/2ac22555-917d-45ab-873d-120618e66e76" alt="treeaibox_logo" width="32"/> Plugin TreeAIBox pour CloudCompare
 
 Un plugin Python pour CloudCompare offrant une interface graphique de style web unifiée pour une suite de modules de traitement LiDAR dédiés à l’analyse forestière et arboricole.
 
 Il permet aux praticiens et aux chercheurs forestiers de traiter de manière interactive des données LiDAR 3D au sein du logiciel open source CloudCompare.
 
-### 📖 Vue d’ensemble
+## 📖 Vue d’ensemble
 
 TreeAIBox regroupe quatre flux de travail LiDAR essentiels dans une seule interface :
 
@@ -331,7 +323,7 @@ TreeAIBox regroupe quatre flux de travail LiDAR essentiels dans une seule interf
 - **QSM**  
   Squelettisation au niveau de la parcelle et export de la structure des arbres au format XML/OBJ.
 
-### 🚀 Fonctionnalités
+## 🚀 Fonctionnalités
 
 - **Plus de 20 modèles IA préentraînés**  
   Téléchargeables depuis un serveur distant ; versions légères ou distillées, ajustées sur des jeux de données annotés avec soin.
@@ -357,9 +349,9 @@ TreeAIBox regroupe quatre flux de travail LiDAR essentiels dans une seule interf
 - **Installateur Windows**  
   Installation automatique des paquets requis et enregistrement du script principal en tant que plugin Python.
 
-### 🛠️ Installation
+## 🛠️ Installation
 
-#### 1. Via l’installateur Windows (recommandé)
+### 1. Via l’installateur Windows (recommandé)
 
 Un installateur en ligne prêt à l’emploi est fourni. Assurez-vous que **l’accès Internet** est activé :
 
@@ -376,7 +368,7 @@ Une fois terminé, redémarrez CloudCompare et lancez le plugin depuis la consol
 
 > **Remarque :** Le script NSIS (`CloudCompare_Python_Plugin.nsi`) peut être modifié pour personnaliser les chemins d’installation ou les versions des paquets.
 
-#### 2. Alternative manuelle (Git + pip)
+### 2. Alternative manuelle (Git + pip)
 
 ```bash
 cd %PROGRAMFILES%\CloudCompare\plugins\Python\Plugins
@@ -386,7 +378,7 @@ pip install PyQt6 PyQt6-WebEngine numpy torch requests
 
 Dans CloudCompare, enregistrez `TreeAIBox.py` via le bouton « Add Script » du menu Script Register.
 
-### ▶️ Utilisation
+## ▶️ Utilisation
 
 Dans CloudCompare, sous **Script Register**, cliquez sur **TreeAIBox**.
 
@@ -398,7 +390,7 @@ Sélectionnez ensuite un nuage de points, choisissez l’onglet du module souhai
 ![capture d’écran WoodCls](https://github.com/user-attachments/assets/2cf1288e-d9e8-4cf8-8251-4e8e2dcd17ec)
 ![capture d’écran QSM](https://github.com/user-attachments/assets/aa1a0bc8-febe-41d1-8bdb-f952970b5017)
 
-### ⚙️ Configuration
+## ⚙️ Configuration
 
 * **`model_zoo.json`** liste les noms de modèles disponibles.
 * Journaux et sorties dans `C:\Users\USERNAME\AppData\Local\CloudCompare\TreeAIBox\`.
@@ -421,7 +413,7 @@ Le tableau ci-dessous résume la résolution voxel et la mémoire GPU utilisée 
   </tbody>
 </table>
 
-### 🗂️ Structure des dossiers
+## 🗂️ Structure des dossiers
 
 ```
 TreeAIBox-main
@@ -465,14 +457,14 @@ TreeAIBox-main
             __init__.py
 ```
 
-### 🤝 Comment contribuer
+## 🤝 Comment contribuer
 
 1. Fork → branche de fonctionnalité → PR.
 2. Respectez le style existant et ajoutez des tests si nécessaire.
 
 Voir [CONTRIBUTING.md](CONTRIBUTING.md)
 
-### 📄 Licence
+## 📄 Licence
 
 Sauf indication contraire, le code source de ce projet est protégé par le droit d’auteur de la Couronne du gouvernement du Canada et est distribué sous la [GNU GPL v3](LICENSE.txt).
 
