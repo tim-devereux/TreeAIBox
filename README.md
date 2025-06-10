@@ -1,3 +1,5 @@
+([Français](#plugin-treeaibox-pour-cloudcompare))
+
 ## TreeAIBox CloudCompare Plugin
 
 A CloudCompare Python plugin providing a unified web-style GUI for a suite of LiDAR processing modules targeting forest and tree analysis.
@@ -298,12 +300,13 @@ The Canada wordmark and related graphics associated with this distribution are p
 
 Developed by Zhouxin Xi, tested by Charumitha Selvaraj
 
-#
 *Born from over a decade of LiDAR research with support from dedicated collaborators.*
 
 ![image](https://github.com/user-attachments/assets/2cac174d-f874-4a4a-bc4d-93c6ee9d4905)
 
 ---
+
+#
 
 
 ## Plugin TreeAIBox pour CloudCompare
