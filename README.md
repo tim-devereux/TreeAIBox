@@ -1,4 +1,4 @@
-([Français](plugin-treeaibox-pour-cloudcompare))
+([Français](#plugin-treeaibox-pour-cloudcompare))
 
 # <img src="https://github.com/user-attachments/assets/2ac22555-917d-45ab-873d-120618e66e76" alt="treeaibox_logo" width="32"/> TreeAIBox CloudCompare Plugin
 
