@@ -300,7 +300,7 @@ Developed by Zhouxin Xi, tested by Charumitha Selvaraj
 ![image](https://github.com/user-attachments/assets/2cac174d-f874-4a4a-bc4d-93c6ee9d4905)
 
 ---
-
+<a id="plugin-treeaibox-pour-cloudcompare"></a>
 # <img src="https://github.com/user-attachments/assets/2ac22555-917d-45ab-873d-120618e66e76" alt="treeaibox_logo" width="32"/> Plugin TreeAIBox pour CloudCompare
 
 Un plugin Python pour CloudCompare offrant une interface graphique de style web unifiée pour une suite de modules de traitement LiDAR dédiés à l’analyse forestière et arboricole.
