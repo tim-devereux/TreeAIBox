@@ -20,7 +20,7 @@ TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
 - **QSM**  
   Plot-level skeletonization and export of tree structure to XML/OBJ.
 
----
+#
 
 ### 🚀 Features
 
@@ -47,8 +47,7 @@ TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
   
 - **Windows installer**  
   Automatically installs required packages and registers the main script as a Python plugin.
----
-
+#
 ### 🛠️ Installation
 
 #### 1. Via Windows installer (Suggested)
@@ -77,7 +76,7 @@ pip install PyQt6 PyQt6-WebEngine numpy torch requests
 ```
 In CloudCompare, register the TreeAIBox.py by clicking the Add Script button under the Script Register menu.
 
----
+#
 
 ### ▶️ Usage
 
@@ -93,7 +92,7 @@ Then select a point cloud, pick your module tab, choose/download a model, adjust
 ![QSM](https://github.com/user-attachments/assets/aa1a0bc8-febe-41d1-8bdb-f952970b5017)
 
 
----
+#
 
 ### ⚙️ Configuration
 
@@ -235,9 +234,9 @@ The table below summarizes the voxel resolution and GPU memory used by the curre
   </tbody>
 </table>
 
----
+#
 
-### Folder structure
+### 🗂️ Folder structure
 
 ```
 TreeAIBox-main
@@ -280,7 +279,7 @@ TreeAIBox-main
             vox3DSegFormerRegression.py                             # DL model structure of point offset regression
             __init__.py
 ```
----
+#
 
 ### 🤝 How to Contribute
 
@@ -299,10 +298,188 @@ The Canada wordmark and related graphics associated with this distribution are p
 
 Developed by Zhouxin Xi, tested by Charumitha Selvaraj
 
----
+#
 *Born from over a decade of LiDAR research with support from dedicated collaborators.*
 
 ![image](https://github.com/user-attachments/assets/2cac174d-f874-4a4a-bc4d-93c6ee9d4905)
+
+---
+
+
+## Plugin TreeAIBox pour CloudCompare
+
+Un plugin Python pour CloudCompare offrant une interface graphique de style web unifiée pour une suite de modules de traitement LiDAR dédiés à l’analyse forestière et arboricole.
+
+Il permet aux praticiens et aux chercheurs forestiers de traiter de manière interactive des données LiDAR 3D au sein du logiciel open source CloudCompare.
+
+### 📖 Vue d’ensemble
+
+TreeAIBox regroupe quatre flux de travail LiDAR essentiels dans une seule interface :
+
+- **TreeFiltering**  
+  Filtrage supervisé par apprentissage profond pour séparer les points de sous-étage et de sur-étage.
+
+- **TreeisoNet**  
+  Pipeline de segmentation de la couronne de bout en bout (StemCls → TreeLoc → TreeOff → CrownOff3D), avec possibilité d’édition manuelle.
+
+- **WoodCls**  
+  Classification 3D des tiges et des branches sur données TLS.
+
+- **QSM**  
+  Squelettisation au niveau de la parcelle et export de la structure des arbres au format XML/OBJ.
+
+### 🚀 Fonctionnalités
+
+- **Plus de 20 modèles IA préentraînés**  
+  Téléchargeables depuis un serveur distant ; versions légères ou distillées, ajustées sur des jeux de données annotés avec soin.
+
+- **3D ciblé**  
+  Fonctionne directement sur des nuages de points 3D bruts — pas d’entrée CHM ou raster — utilisant des architectures IA basées sur les voxels pour l’entraînement et l’inférence.
+
+- **Options de capteur, de scène et de résolution**  
+  Prise en charge de TLS, ALS et LiDAR UAV pour les forêts boréales, mixtes et en renaturalisation.
+
+- **Bascule d’accélération GPU**  
+  Exécution sur GPU (CUDA) ou CPU pour plus de flexibilité.
+
+- **Cadre UI de type web**  
+  Fenêtres redimensionnables et composants UI modulaires.
+
+- **Contrôles interactifs de paramètres**  
+  Personnalisation des résultats via des paramètres ajustables.
+
+- **Open source**  
+  Entièrement basé en Python (à l’exception des fichiers de modèles préentraînés) ; sorties : champs scalaires, nuages de points et fichiers exportables.
+
+- **Installateur Windows**  
+  Installation automatique des paquets requis et enregistrement du script principal en tant que plugin Python.
+
+### 🛠️ Installation
+
+#### 1. Via l’installateur Windows (recommandé)
+
+Un installateur en ligne prêt à l’emploi est fourni. Assurez-vous que **l’accès Internet** est activé :
+
+1. Téléchargez ou copiez **TreeAIBox_Plugin_Installer.exe** dans un dossier quelconque.  
+2. **Clic droit → Exécuter en tant qu’administrateur** (recommandé).  
+3. Suivez les instructions ; par défaut, il détecte votre dossier CloudCompare (ex. `%PROGRAMFILES%\CloudCompare`) via le registre.  
+4. L’installateur va :  
+   - Copier tous les scripts Python, fichiers UI, images et modules dans  
+     `…\CloudCompare\plugins\Python\Plugins\TreeAIBox\`  
+   - Générer un script batch d’aide pour détecter le GPU NVIDIA et installer la roue PyTorch appropriée. (Veuillez patienter.)  
+   - Lancer `pip` pour installer les paquets Python requis (PyQt6, torch, requests, etc.).
+
+Une fois terminé, redémarrez CloudCompare et lancez le plugin depuis la console Python.
+
+> **Remarque :** Le script NSIS (`CloudCompare_Python_Plugin.nsi`) peut être modifié pour personnaliser les chemins d’installation ou les versions des paquets.
+
+#### 2. Alternative manuelle (Git + pip)
+
+```bash
+cd %PROGRAMFILES%\CloudCompare\plugins\Python\Plugins
+git clone https://github.com/truebelief/cc-TreeAIBox-plugin-test TreeAIBox
+pip install PyQt6 PyQt6-WebEngine numpy torch requests
+````
+
+Dans CloudCompare, enregistrez `TreeAIBox.py` via le bouton « Add Script » du menu Script Register.
+
+### ▶️ Utilisation
+
+Dans CloudCompare, sous **Script Register**, cliquez sur **TreeAIBox**.
+
+![capture d’écran TreeFiltering](https://github.com/user-attachments/assets/ee4f3558-6535-448b-8279-d0a4cff2158f)
+
+Sélectionnez ensuite un nuage de points, choisissez l’onglet du module souhaité, sélectionnez/téléchargez un modèle, ajustez les paramètres, puis cliquez sur **Apply**.
+
+![capture d’écran TreeIsoNet](https://github.com/user-attachments/assets/d82e3bf6-8db1-49a4-a7c2-134ce4760fec)
+![capture d’écran WoodCls](https://github.com/user-attachments/assets/2cf1288e-d9e8-4cf8-8251-4e8e2dcd17ec)
+![capture d’écran QSM](https://github.com/user-attachments/assets/aa1a0bc8-febe-41d1-8bdb-f952970b5017)
+
+### ⚙️ Configuration
+
+* **`model_zoo.json`** liste les noms de modèles disponibles.
+* Journaux et sorties dans `C:\Users\USERNAME\AppData\Local\CloudCompare\TreeAIBox\`.
+
+Le tableau ci-dessous résume la résolution voxel et la mémoire GPU utilisée par les modèles IA actuels, classés par type de capteur, tâche, composant et scène :
+
+<table>
+  <thead>
+    <tr>
+      <th align="center">Capteur</th>
+      <th align="center">Tâche</th>
+      <th align="center">Composant</th>
+      <th align="center">Scène</th>
+      <th align="center">Résolution</th>
+      <th align="center">VRAM</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Table unchanged -->
+  </tbody>
+</table>
+
+### 🗂️ Structure des dossiers
+
+```
+TreeAIBox-main
+│   TreeAIBox_Plugin_Installer.exe                  # Installateur Windows pour le plugin
+│   CloudCompare_Python_Plugin.nsi                  # Configuration de l’installateur
+│   treeaibox-header.jpg                            # Icône d’installation
+│   treeaibox-welcome.jpg                           # Icône d’installation
+│   dl_visualization.svg                            # Illustration de la structure DL principale
+│   LICENSE.txt                                     # Fichier de licence
+│   model_zoo.json                                  # Liste des modèles DL disponibles
+│   README.md                                       # README
+│   TODO.md                                         # Liste de tâches
+│   TreeAIBox.py                                    # Programme Python principal
+│   treeaibox_logo.ico                              # Logo du plugin
+│   treeaibox_ui.html                               # Interface principale (vue web)
+├───img                                             # Icônes et images de l’interface
+└───modules                                         # Sous-modules de TreeAIBox
+    ├───filter                                      # TreeFiltering et WoodCls
+    │       componentFilter.py                      # Filtrage des couches arbres/branches/tiges
+    │       createDTM.py                            # Création de DTM à partir des couches filtrées
+    │       *.json                                  # Paramètres des modèles DL
+    │       vox3DESegFormer.py                      # Structure du modèle DL (v2)
+    │       vox3DSegFormer.py                       # Structure du modèle DL (v1)
+    │       __init__.py
+    │
+    ├───qsm                                         # Module QSM
+    │       applyQSM.py                             # Squelettisation et reconstruction 3D
+    │       __init__.py
+    │
+    └───treeisonet
+            cleanSmallerClusters.py                 # Suppression approximative des petits clusters
+            treeLoc.py                              # Extraction des emplacements de tige/cime
+            treeOff.py                              # Clustering de la couronne (scène sans tiges visibles)
+            stemCluster.py                          # Clustering des tiges (règle du plus court chemin)
+            crownCluster.py                         # Clustering couronne → tiges segmentées
+            crownOff.py                             # Clustering deep learning de la couronne
+            treeStat.py                             # Statistiques individuelles et par parcelle
+            *.json                                  # Paramètres des modèles DL
+            vox3DSegFormerDetection.py              # Détection de localisation d’arbres
+            vox3DSegFormerRegression.py             # Régression de décalage de points
+            __init__.py
+```
+
+### 🤝 Comment contribuer
+
+1. Fork → branche de fonctionnalité → PR.
+2. Respectez le style existant et ajoutez des tests si nécessaire.
+
+Voir [CONTRIBUTING.md](CONTRIBUTING.md)
+
+### 📄 Licence
+
+Sauf indication contraire, le code source de ce projet est protégé par le droit d’auteur de la Couronne du gouvernement du Canada et est distribué sous la [GNU GPL v3](LICENSE.txt).
+
+Le mot-symbole Canada et les éléments graphiques associés à cette distribution sont protégés par la loi sur les marques de commerce et le droit d’auteur. Aucune permission n’est accordée pour les utiliser en dehors des paramètres du programme d’identité visuelle du gouvernement du Canada. Pour plus d’informations, voir [Exigences d’identité fédérale](https://www.canada.ca/en/treasury-board-secretariat/topics/government-communications/federal-identity-requirements.html).
+
+Développé par Zhouxin Xi, testé par Charumitha Selvaraj
+
+*Issu de plus d’une décennie de recherche LiDAR avec le soutien de collaborateurs dévoués.*
+
+![capture d’écran finale](https://github.com/user-attachments/assets/2cac174d-f874-4a4a-bc4d-93c6ee9d4905)
 
 
 
