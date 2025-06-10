@@ -1,7 +1,9 @@
-
+[CONTRIBUTING.md](https://github.com/user-attachments/files/20678317/CONTRIBUTING.md)
 ## TreeAIBox CloudCompare Plugin
 
 A CloudCompare Python plugin providing a unified web-style GUI for a suite of LiDAR processing modules targeting forest and tree analysis.
+
+It enables forestry practitioners and researchers to interactively process 3D LiDAR data within the open-source CloudCompare software.
 
 ### 📖 Overview
 
@@ -281,14 +283,20 @@ TreeAIBox-main
 ```
 ---
 
-### 🤝 Contributing
+### 🤝 How to Contribute
 
 1. Fork → feature branch → PR.  
 2. Follow existing style and add tests as needed.
 
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+
 ### 📄 License
 
-GNU GPL v3 (same as CloudCompare).
+Unless otherwise noted, the source code of this project is covered under Crown Copyright, Government of Canada, and is distributed under the [GNU GPL v3](LICENSE).
+
+The Canada wordmark and related graphics associated with this distribution are protected under trademark law and copyright law. No permission is granted to use them outside the parameters of the Government of Canada's corporate identity program. For more information, see [Federal identity requirements](https://www.canada.ca/en/treasury-board-secretariat/topics/government-communications/federal-identity-requirements.html).
+
 
 Developed by Zhouxin Xi, tested by Charumitha Selvaraj
 
@@ -296,5 +304,7 @@ Developed by Zhouxin Xi, tested by Charumitha Selvaraj
 *Born from over a decade of LiDAR research with support from dedicated collaborators.*
 
 ![image](https://github.com/user-attachments/assets/2cac174d-f874-4a4a-bc4d-93c6ee9d4905)
+
+
 
 
