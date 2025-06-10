@@ -1,4 +1,3 @@
-[CONTRIBUTING.md](https://github.com/user-attachments/files/20678317/CONTRIBUTING.md)
 ## TreeAIBox CloudCompare Plugin
 
 A CloudCompare Python plugin providing a unified web-style GUI for a suite of LiDAR processing modules targeting forest and tree analysis.
