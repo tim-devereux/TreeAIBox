@@ -1,5 +1,5 @@
 ; TreeAIBox - CloudCompare Python Plugin Installer
-; NSIS Script for creating a GUI installer
+; NSIS Script for creating a GUI installer with reinstallation support
 
 !include "MUI2.nsh"
 !include "FileFunc.nsh"
@@ -25,6 +25,7 @@ Var CCPathFound
 Var PythonPathFound
 Var HasNvidiaGPU
 Var GPUInfoText
+Var IsReinstall
 
 ; Interface Settings
 !define MUI_ABORTWARNING
@@ -52,6 +53,57 @@ Page custom CCPathSelection CCPathSelectionLeave
   Pop `${ResultVar}`
 !macroend
 !define StrContains "!insertmacro StrContains"
+
+; Function to kill processes that might lock files
+Function KillProcesses
+    DetailPrint "Checking for running CloudCompare processes..."
+    
+    ; Kill CloudCompare processes
+    nsExec::ExecToStack 'taskkill /F /IM "CloudCompare.exe" /T'
+    Pop $0
+    ${If} $0 == "0"
+        DetailPrint "CloudCompare processes terminated"
+        Sleep 2000  ; Wait for processes to fully terminate
+    ${Else}
+        DetailPrint "No CloudCompare processes found or already terminated"
+    ${EndIf}
+    
+    ; Kill any Python processes that might be using the plugin files
+    nsExec::ExecToStack 'taskkill /F /IM "python.exe" /FI "WINDOWTITLE eq *TreeAIBox*" /T'
+    Pop $0
+    DetailPrint "Python processes check completed"
+FunctionEnd
+
+; Function to check if TreeAIBox is already installed
+Function CheckExistingInstallation
+    Push $R0
+    
+    StrCpy $IsReinstall "0"
+    
+    ; Check if TreeAIBox plugin already exists
+    ${If} ${FileExists} "$CCPath\plugins\Python\Plugins\TreeAIBox\TreeAIBox.py"
+        StrCpy $IsReinstall "1"
+        DetailPrint "Existing TreeAIBox installation detected"
+        
+        ; Show confirmation dialog for reinstallation
+        MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 \
+            "TreeAIBox plugin is already installed in this CloudCompare installation.$\r$\n$\r$\nDo you want to reinstall it?" \
+            IDYES ContinueReinstall
+        
+        ; User chose No - return to previous page instead of quitting
+        DetailPrint "User cancelled reinstallation"
+        StrCpy $IsReinstall "0"  ; Reset reinstall flag
+        Abort  ; This will abort the current page and return to previous page
+        
+        ContinueReinstall:
+        DetailPrint "User confirmed reinstallation"
+    ${EndIf}
+    
+    Pop $R0
+FunctionEnd
+
+; Function to backup existing installation (removed - no longer used)
+; Backup functionality removed per user request
 
 ; Try to find CloudCompare installation
 Function FindCloudCompare
@@ -184,6 +236,7 @@ Function .onInit
     StrCpy $CCPathFound "0"
     StrCpy $PythonPathFound "0"
     StrCpy $HasNvidiaGPU "0"
+    StrCpy $IsReinstall "0"
     
     ; Check for Nvidia GPU
     DetailPrint "Checking for NVIDIA GPU..."
@@ -301,6 +354,9 @@ Function CCPathSelectionLeave
     IfFileExists "$PythonPath" +3 0
     MessageBox MB_ICONEXCLAMATION|MB_YESNO "Python not found in the CloudCompare plugins directory. The plugin may not work correctly. Do you want to continue anyway?" IDYES +2
     Abort
+    
+    ; Check for existing installation
+    Call CheckExistingInstallation
 FunctionEnd
 
 Function StrContains
@@ -367,6 +423,21 @@ Function ConvertToForwardSlashes
 FunctionEnd
 
 Section "Install Python Packages" SecInstall
+    ; Check for existing installation and handle accordingly
+    ${If} $IsReinstall == "1"
+        DetailPrint "Reinstalling TreeAIBox plugin..."
+        
+        ; Kill any running processes that might lock files
+        Call KillProcesses
+        
+        ; Force remove existing installation directory (no backup)
+        DetailPrint "Removing existing installation..."
+        RMDir /r "$CCPath\plugins\Python\Plugins\TreeAIBox"
+        
+        ; Wait a bit to ensure file system operations complete
+        Sleep 1000
+    ${EndIf}
+    
     SetOutPath "$CCPath\plugins\Python"
     
     ; Create a temporary batch file to install packages
@@ -409,33 +480,47 @@ Section "Install Python Packages" SecInstall
     Delete "$TEMP\install_packages.bat"
     
     ; Create TreeAIBox directory structure in the plugins folder
-    DetailPrint "Installing TreeAIBox plugin..."
+    DetailPrint "Installing TreeAIBox plugin files..."
+    
+    ; Ensure the main directory exists
+    CreateDirectory "$CCPath\plugins\Python\Plugins\TreeAIBox"
     SetOutPath "$CCPath\plugins\Python\Plugins\TreeAIBox"
     
-    ; Copy main plugin files
-    File "TreeAIBox.py"
-    File "model_zoo.json"
-    File "treeaibox_ui.html"
-    File "dl_visualization.svg"
+    ; Set overwrite mode to force overwriting of existing files
+    SetOverwrite on
+    
+    ; Copy main plugin files with forced overwrite
+    File /oname=TreeAIBox.py "TreeAIBox.py"
+    File /oname=model_zoo.json "model_zoo.json"
+    File /oname=treeaibox_ui.html "treeaibox_ui.html"
+    File /oname=dl_visualization.svg "dl_visualization.svg"
     
     ; Create and copy directories with their contents
+    CreateDirectory "$CCPath\plugins\Python\Plugins\TreeAIBox\img"
     SetOutPath "$CCPath\plugins\Python\Plugins\TreeAIBox\img"
     File /nonfatal "img\*.png"
     File /nonfatal "img\*.jpg"
     File /nonfatal "img\*.svg"
     
+    CreateDirectory "$CCPath\plugins\Python\Plugins\TreeAIBox\modules"
+    CreateDirectory "$CCPath\plugins\Python\Plugins\TreeAIBox\modules\filter"
     SetOutPath "$CCPath\plugins\Python\Plugins\TreeAIBox\modules\filter"
     File /nonfatal "modules\filter\*.py"
     File /nonfatal "modules\filter\*.json"
     
+    CreateDirectory "$CCPath\plugins\Python\Plugins\TreeAIBox\modules\qsm"
     SetOutPath "$CCPath\plugins\Python\Plugins\TreeAIBox\modules\qsm"
     File /nonfatal "modules\qsm\*.py"
     
+    CreateDirectory "$CCPath\plugins\Python\Plugins\TreeAIBox\modules\treeisonet"
     SetOutPath "$CCPath\plugins\Python\Plugins\TreeAIBox\modules\treeisonet"
     File /nonfatal "modules\treeisonet\*.py"
     File /nonfatal "modules\treeisonet\*.json"
     
-    DetailPrint "Installation complete"
+    ; Reset overwrite mode to default
+    SetOverwrite ifnewer
+    
+    DetailPrint "Plugin files installation complete"
 SectionEnd
 
 Section "Register TreeAIBox Script" SecRegister
