@@ -1,6 +1,6 @@
 ([Français](#plugin-treeaibox-pour-cloudcompare))
 
-# <img src="https://github.com/NRCan/TreeAIBox/blob/b0918d50b1343d62e1b518c29cd50d38f801b359/treeaibox-header.bmp" alt="treeaibox_logo" width="32"/> TreeAIBox CloudCompare Plugin
+# <img src="https://github.com/NRCan/TreeAIBox/blob/b0918d50b1343d62e1b518c29cd50d38f801b359/treeaibox-header.bmp" alt="treeaibox_logo" width="60"/> TreeAIBox CloudCompare Plugin
 
 A CloudCompare Python plugin providing a unified web-style GUI for a suite of LiDAR processing modules targeting forest and tree analysis.
 
