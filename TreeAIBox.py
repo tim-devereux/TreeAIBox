@@ -108,8 +108,9 @@ class WebInterface(QObject):
             self.model_names = json.load(f)
 
         # Server path for models
-        self.model_server_path = "http://xizhouxin.com/static/treeaibox/"
+        # self.model_server_path = "http://xizhouxin.com/static/treeaibox/"
         # self.model_server_path = "https://github.com/truebelief/TreeAIBox/releases/download/v1.0/"
+        self.model_server_path = "https://github.com/NRCan/TreeAIBox/releases/download/v1.0/"
 
         # Check CUDA availability
         self.is_cuda_available = torch.cuda.is_available()
@@ -208,7 +209,8 @@ class WebInterface(QObject):
         # Set up the download in a worker thread
         def download_task():
             try:
-                url = f"{self.model_server_path}{model_name}.pth"
+                #Due to the GitHub rule, all brackets in released model names were reformatted. 
+                url = f"{self.model_server_path}{model_name}.pth".replace("(", "_").replace(")", "")
                 local_path = os.path.join(self.model_local_path, f"{model_name}.pth")
 
                 # If file exists, we'll overwrite it
