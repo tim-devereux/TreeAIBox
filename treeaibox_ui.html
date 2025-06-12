@@ -1055,6 +1055,22 @@ input[type="range"]::-webkit-slider-thumb {
                 <label for="sensor-als">ALS (stem invisible)</label>
               </div>
             </div>
+			<div class="option-group-content" style="padding:5px 0 0 5px">
+				<div class="parameter-pair">
+					<div class="radio-option">
+						<input type="checkbox" id="vox-custom">
+						<label for="vox-custom">Custom voxel resolution</label>
+					</div>
+					<div class="parameter-row">
+						<label class="parameter-label">XY(m): </label>
+						<input type="number" id="vox-xy" class="parameter-input" value="0" min="0" step="0.5" disabled>
+					</div>
+					<div class="parameter-row">
+						<label class="parameter-label">Z(m):</label>
+						<input type="number" id="vox-z" class="parameter-input" value="0" min="0" step="0.5" disabled>
+					</div>
+				</div>
+			</div>
           </details>
 
           <details class="option-group" open>
@@ -1421,7 +1437,7 @@ input[type="range"]::-webkit-slider-thumb {
 
     <div class="content-row">
       <div class="image-container" style="width: 30%; border:None">
-        <img class="resizable-image" src="img/logo_wall.png" alt="Logos of Contributing Organizations" style="border: 1px solid #ddd;">
+        <img class="resizable-image" src="img/logo_wall.jpg" alt="Logos of Contributing Organizations" style="border: 1px solid #ddd;">
         <div class="image-caption">TreeAIBox is a collaborative initiative bringing together expertise from various institutions</div>
       </div>
       <div class="handle"></div>
@@ -1612,8 +1628,7 @@ input[type="range"]::-webkit-slider-thumb {
                 return;
             }
 
-            const selectedModel = select.options[select.selectedIndex].value;
-
+            const selectedModel = select.options[select.selectedIndex].value;		
             // Double-check that we have a valid model name
             if (!selectedModel || selectedModel === "No models available") {
                 showNotification("Please select a valid model", "warning");
@@ -1708,16 +1723,24 @@ input[type="range"]::-webkit-slider-thumb {
                     const cutoff_thresh = parseFloat(document.getElementById('treeloc-cutoff').value);
 
                     if_stem=model.includes("tls") || model.includes("uav");
+					const custom_voxel_res_xy=parseFloat(document.getElementById('vox-xy').value);
+					const custom_voxel_res_z=parseFloat(document.getElementById('vox-z').value);
+								
                     // showNotification(`TreeisoNet ${conf_thresh} ${nms_thresh} ${max_gap} ${min_rad}`, "error");
                     // Call the appropriate backend function based on the module
-                    backend.treeLoc(useGPU, if_stem, cutoff_thresh, conf_thresh, min_rad, max_gap, nms_thresh).then(success => {
+                    backend.treeLoc(useGPU, if_stem, cutoff_thresh, conf_thresh, min_rad, max_gap, nms_thresh, custom_voxel_res_xy, custom_voxel_res_z).then(success => {
                         // if (!success) {
                         //     showNotification(`Failed to apply TreeisoNet ${module}`, "error");
                         // }
                     });
 
                 } else if (module === 'treeoff') {
-                    backend.treeOff(useGPU).then(success => {
+					const custom_voxel_res_xy=parseFloat(document.getElementById('vox-xy').value);
+					const custom_voxel_res_z=parseFloat(document.getElementById('vox-z').value);
+								
+                    // showNotification(`TreeisoNet ${conf_thresh} ${nms_thresh} ${max_gap} ${min_rad}`, "error");
+                    // Call the appropriate backend function based on the module
+                    backend.treeOff(useGPU,custom_voxel_res_xy,custom_voxel_res_z).then(success => {
                         // if (!success) {
                         //     showNotification(`Failed to apply TreeisoNet ${module}`, "error");
                         // }
@@ -1900,6 +1923,22 @@ function initializeResizablePanels() {
 
         });
 
+		// Add this new event listener for vox-custom checkbox
+		document.getElementById('vox-custom').addEventListener('change', function() {
+			const voxXY = document.getElementById('vox-xy');
+			const voxZ = document.getElementById('vox-z');
+			
+			if (this.checked) {
+				voxXY.disabled = false;
+				voxZ.disabled = false;
+			} else {
+				voxXY.disabled = true;
+				voxZ.disabled = true;
+				voxXY.value = '0';
+				voxZ.value = '0';
+			}
+		});
+		
         // // Initialize the UI based on default selections
         toggleModuleSpecificUI('module-stemcls');
         document.getElementById('treeoff-module').classList.add('disabled');

@@ -17,7 +17,7 @@ def mergeshift(points,treelocs,treeids):
     seg_labels=treeids[idx]
     return seg_labels
 
-def treeOff(config_file, pcd, treeloc, model_path, use_cuda=True, progress_callback=lambda x: None):
+def treeOff(config_file, pcd, treeloc, model_path, use_cuda=True, progress_callback=lambda x: None, custom_resolution=np.array([0,0,0])):
     progress_callback(0)
     try:
         with open(config_file) as json_file:
@@ -29,6 +29,9 @@ def treeOff(config_file, pcd, treeloc, model_path, use_cuda=True, progress_callb
 
     nbmat_sz = np.array(configs["model"]["voxel_number_in_block"])
     min_res = np.array(configs["model"]["voxel_resolution_in_meter"])
+    
+    if custom_resolution[0]>0 and custom_resolution[1]>0 and custom_resolution[2]>0:
+        min_res=custom_resolution
 
     try:
         from vox3DSegFormerRegression import Segformer

@@ -126,6 +126,18 @@ class WebInterface(QObject):
         # Keep track of worker threads
         self.workers = []
 
+    def cleanup(self):
+        """Clean up resources"""
+        for worker in self.workers:
+            if worker.isRunning():
+                worker.terminate()
+                worker.wait(3000)
+        self.workers.clear()
+    
+    def __del__(self):
+        """Destructor to ensure cleanup"""
+        self.cleanup()
+
     def get_model_storage_dir(self):
         """Create and return the model storage directory path"""
         if os.name == 'nt':  # Windows
@@ -507,8 +519,8 @@ class WebInterface(QObject):
             self.progressUpdated.emit(0)
             return False
 
-    @pyqtSlot(bool, bool, float,float, float, float, float, result=bool)
-    def treeLoc(self, use_gpu, if_stem, cutoff_thresh, conf_thresh, min_rad, max_gap, nms_thresh):
+    @pyqtSlot(bool, bool, float,float, float, float, float, float, float, result=bool)
+    def treeLoc(self, use_gpu, if_stem, cutoff_thresh, conf_thresh, min_rad, max_gap, nms_thresh,custom_voxel_res_xy,custom_voxel_res_z):
         """Apply component filtering to the selected point cloud using 3D deep learning"""
         print(f"Apply TreeLoc extraction with use_gpu={use_gpu}")
         print(f"Currently selected model: {self.selected_model}")
@@ -584,6 +596,7 @@ class WebInterface(QObject):
                                 use_cuda=use_gpu,
                                 if_stem=if_stem,
                                 cutoff_thresh=cutoff_thresh,
+                                custom_resolution=np.array([custom_voxel_res_xy,custom_voxel_res_xy,custom_voxel_res_z]),
                                 progress_callback=self.process_events
                                 )
                 worker.progressUpdated.connect(self.progressUpdated)
@@ -782,8 +795,8 @@ class WebInterface(QObject):
             self.showNotification.emit(f"Error updating results: {str(e)}", "error")
             self.progressUpdated.emit(0)
 
-    @pyqtSlot(bool, result=bool)
-    def treeOff(self, use_gpu):
+    @pyqtSlot(bool, float, float, result=bool)
+    def treeOff(self, use_gpu, custom_voxel_res_xy, custom_voxel_res_z):
         """Apply component filtering to the selected point cloud using 3D deep learning"""
         print(f"Apply TreeOff segmentation with use_gpu={use_gpu}")
         print(f"Currently selected model: {self.selected_model}")
@@ -863,6 +876,7 @@ class WebInterface(QObject):
                                 treeloc,
                                 model_path,
                                 use_cuda=use_gpu,
+                                custom_resolution=np.array([custom_voxel_res_xy,custom_voxel_res_xy,custom_voxel_res_z]),
                                 progress_callback=self.process_events
                                 )
                 worker.progressUpdated.connect(self.progressUpdated)
@@ -1270,6 +1284,8 @@ class WebInterface(QObject):
 
                 itc_field = pc.getScalarFieldIndexByName(f"treeoff")
                 if itc_field < 0:
+                    itc_field = pc.getScalarFieldIndexByName(f"itc")
+                if itc_field < 0:
                     self.showNotification.emit("Please apply the TreeOff first", "warning")
                     self.progressUpdated.emit(0)
                     return
@@ -1543,6 +1559,7 @@ class WebInterface(QObject):
 class TreeAIBoxWeb(QMainWindow):
     def __init__(self):
         super().__init__()
+                
         self.setWindowTitle("TreeAIBox")
         self.resize(1200, 900)
 
@@ -1558,6 +1575,30 @@ class TreeAIBoxWeb(QMainWindow):
 
         # Load HTML content
         self.loadHtmlContent()
+
+
+
+    def closeEvent(self, event):
+        """Handle window close event with proper cleanup"""
+
+        if hasattr(self.web_interface, 'workers'):
+            for worker in self.web_interface.workers:
+                if worker.isRunning():
+                    worker.terminate()
+                    worker.wait(3000)  # Wait up to 3 seconds
+            self.web_interface.workers.clear()
+        
+        # Clear the global reference
+        app = QApplication.instance()
+        if app is not None:
+        #     print("Forcing application exit...")
+            app.quit()
+            QApplication.exit()
+
+        # Accept the close event
+        #event.accept()
+        #super().closeEvent(event)
+
 
     def loadHtmlContent(self):
         """Load the HTML UI"""
@@ -1589,8 +1630,21 @@ class TreeAIBoxWeb(QMainWindow):
             self.web_view.setHtml(html_content)
 
 
+
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = TreeAIBoxWeb()
-    window.show()
-    sys.exit(app.exec())
+    # Get existing QApplication instance or create new one if none exists
+    app = QApplication.instance()
+    if app is None:
+        app = QApplication(sys.argv)
+        
+        window = TreeAIBoxWeb()
+        window.show()
+        app.exec()
+        del app
+        sys.exit()
+    else:
+        window = TreeAIBoxWeb()
+        window.show()
+        app.exec()
+        print("Please restart CC to run the plugin")
+

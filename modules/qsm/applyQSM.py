@@ -380,16 +380,14 @@ def findStems(pts,segs_centroids,segs_centroids_stem_labels,nn_centroids_k=5,wei
     return stem_labels_idx[stem_path],segs_centroids_stem_labels
 
 
-def initSegmentation(pts,K_stem=5,reg_strength_stem=1.0,K_branch=10,reg_strength_branch=1.0,progress_bar=None):
-    if progress_bar:
-        progress_bar.setValue(0)
+def initSegmentation(pts,K_stem=5,reg_strength_stem=1.0,K_branch=10,reg_strength_branch=1.0,progress_callback=lambda x: None):
+    progress_callback(0)
 
     init_segs = np.zeros(len(pts),dtype=np.int32)
     stemcls=pts[:,-1]
     stem_pts_ind = (stemcls>1.0)
     stem_pts = pts[stem_pts_ind,:]
-    if progress_bar:
-        progress_bar.setValue(10)
+    progress_callback(10)
 
     # init_segs[stem_pts_ind], n_stem_segs=branchSegmentation(stem_pts, stem_spacing)
     init_segs[stem_pts_ind], n_stem_segs=branchSegmentation(stem_pts,K=K_stem, reg_strength=reg_strength_stem)
@@ -399,8 +397,7 @@ def initSegmentation(pts,K_stem=5,reg_strength_stem=1.0,K_branch=10,reg_strength
     branch_segs_labels,n_branch_segs=branchSegmentation(branch_pts,K=K_branch, reg_strength=reg_strength_branch)
     init_segs[~stem_pts_ind] = branch_segs_labels+n_stem_segs
 
-    if progress_bar:
-        progress_bar.setValue(100)
+    progress_callback(100)
     return init_segs.astype(np.int32)
 
 def refineBranchHead(tree,segs_centroids,max_distance=0.3):
@@ -507,9 +504,9 @@ def calculateRadius(pts,tree,segs_centroids,min_r=0.04):# this needs to be impro
         tree_centroid_radius.append(path_centroid_radius)
     return tree_centroid_radius
 
-def applyQSM(pts,k_neighbors=6,max_graph_distance=40, max_connectivity_search_distance=0.03, occlusion_distance_cutoff=0.4,smooth_ma_k=3,progress_bar=None,wd=None):#pts[x,y,z,stemcls[stem:1],init_segs]
-    if progress_bar:
-        progress_bar.setValue(0)
+def applyQSM(pts,k_neighbors=6,max_graph_distance=40, max_connectivity_search_distance=0.03, occlusion_distance_cutoff=0.4,smooth_ma_k=3,progress_callback=lambda x: None,wd=None):#pts[x,y,z,stemcls[stem:1],init_segs]
+    progress_callback(0)
+
 
     segs_centroids = npg.aggregate(pts[:, -1].astype(np.int32), pts[:, :3], axis=0, func=np.mean)#pts[-1] is init_segs
     segs_centroids_counts = npg.aggregate(pts[:, -1].astype(np.int32), 1)#pts[-1] is init_segs
@@ -520,14 +517,14 @@ def applyQSM(pts,k_neighbors=6,max_graph_distance=40, max_connectivity_search_di
     stems_idx,segs_centroids_stem_labels=findStems(pts,segs_centroids,segs_centroids_stem_labels)
     graph, rows0, cols0, distances0, seg_id_pairs_set = getPointwiseClusterDistance(pts, segs_centroids, segs_centroids_stem_labels, max_connectivity_search_k=k_neighbors, max_connectivity_search_distance=max_connectivity_search_distance, occlusion_distance_cutoff=occlusion_distance_cutoff*0.5,nn_centroids_k=k_neighbors)
 
-    if progress_bar:
-        progress_bar.setValue(50)
+    progress_callback(40)
+
 
     n_segs_centroids=len(segs_centroids)
     tree,segs_labels,n_segs=recreateTreePath(stems_idx, graph, n_segs_centroids,max_graph_distance)
 
-    if progress_bar:
-        progress_bar.setValue(70)
+    progress_callback(60)
+
 
     stem_new_ind=segs_labels>0
     stem_new_idx=np.where(stem_new_ind)[0]
@@ -536,16 +533,14 @@ def applyQSM(pts,k_neighbors=6,max_graph_distance=40, max_connectivity_search_di
     graph=updatePointwiseClusterDistance(rows0, cols0, distances0, seg_id_pairs_set, stem_new_ind, occlusion_distance_cutoff=occlusion_distance_cutoff,weight_min_dist=0.03)
     tree, segs_labels,n_segs = recreateTreePath(stem_new_idx, graph,n_segs_centroids, max_graph_distance,tree,init_seg_id=n_segs+1,segs_labels=segs_labels)
 
-    if progress_bar:
-        progress_bar.setValue(70)
+    progress_callback(70)
 
     tree=refineBranchHead(tree,segs_centroids,max_distance=occlusion_distance_cutoff)
     tree,segs_labels=cleanTree(tree,segs_centroids_counts,segs_labels)
     tree_centroid_radius=calculateRadius(pts,tree,segs_centroids)
     segs_labels=segs_labels[segs_centroids_inverse_idx].astype(np.int32)
 
-    if progress_bar:
-        progress_bar.setValue(80)
+    progress_callback(80)
     return tree, segs_centroids,segs_labels,tree_centroid_radius
 
 if __name__ == '__main__':

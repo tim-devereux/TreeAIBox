@@ -96,7 +96,7 @@ def merge_patches(columns_min,min_res,nbmat_sz,patches, sp_mins):
         corner_ij[1]:corner_ij[1] + nbmat_sz[1]] = np.transpose(np.flip(patches[k], 1))
     return img
 
-def treeLoc(config_file, pcd, model_path, use_cuda=True,if_stem=False,cutoff_thresh=1.0, progress_callback=lambda x: None):
+def treeLoc(config_file, pcd, model_path, use_cuda=True,if_stem=False,cutoff_thresh=1.0, progress_callback=lambda x: None, custom_resolution=np.array([0,0,0])):
     progress_callback(0)
     try:
         with open(config_file) as json_file:
@@ -108,6 +108,9 @@ def treeLoc(config_file, pcd, model_path, use_cuda=True,if_stem=False,cutoff_thr
 
     nbmat_sz = np.array(configs["model"]["voxel_number_in_block"])
     min_res = np.array(configs["model"]["voxel_resolution_in_meter"])
+    
+    if custom_resolution[0]>0 and custom_resolution[1]>0 and custom_resolution[2]>0:
+        min_res=custom_resolution
 
     try:
         from vox3DSegFormerDetection import Segformer

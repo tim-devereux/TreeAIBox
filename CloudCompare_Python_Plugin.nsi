@@ -459,7 +459,7 @@ Section "Install Python Packages" SecInstall
     
     ; Install other required packages
     FileWrite $0 'echo Installing other required packages...$\r$\n'
-    FileWrite $0 '"$PythonPath" -m pip install PyQt6 PyQt6-WebEngine requests numpy_indexed timm numpy_groupies cut_pursuit_py circle_fit scikit-learn$\r$\n'
+    FileWrite $0 '"$PythonPath" -m pip install PyQt6 PyQt6-WebEngine requests numpy_indexed timm numpy_groupies cut_pursuit_py circle_fit scikit-learn scikit-image$\r$\n'
     FileWrite $0 'if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%$\r$\n'
     FileClose $0
     
@@ -471,7 +471,10 @@ Section "Install Python Packages" SecInstall
     ; Check result
     ${If} $0 != "0"
         DetailPrint "Package installation failed with exit code $0"
-        MessageBox MB_ICONEXCLAMATION|MB_OK "Failed to install required Python packages. Please check the log for details."
+        MessageBox MB_ICONEXCLAMATION|MB_OK "Failed to install required Python packages (Exit Code: $0).$\r$\n$\r$\nPlease check the detailed log above for specific error information.$\r$\n$\r$\nInstallation will be aborted so you can review the log and troubleshoot the issue."
+        
+        ; Abort installation to keep log visible
+        Abort
     ${Else}
         DetailPrint "Python packages installed successfully"
     ${EndIf}
