@@ -1499,8 +1499,8 @@ input[type="range"]::-webkit-slider-thumb {
   <script>
     // Global variables
     let backend;
-    // let currentTab = 'treefiltering';
-    let currentTab = 'treeisonet';
+    let currentTab = 'treefiltering';
+    //let currentTab = 'treeisonet';
     let models = [];
     let modelsStatus = {};
 
@@ -2034,49 +2034,51 @@ function initializeResizablePanels() {
 
     // Populate the model select dropdown
     function populateModelSelect() {
-        // Choose the appropriate select element based on the current tab
-        const selectId = "pretrain-"+currentTab;
-        if (!selectId) return;
+		// Choose the appropriate select element based on the current tab
+		const selectId = "pretrain-" + currentTab;
+		const select = document.getElementById(selectId);
+		if (!select) return;
 
-        const select = document.getElementById(selectId);
+		// remember what was selected (if anything)
+		const previousValue = select.value;
 
-        select.innerHTML = '';
+		// clear out old options
+		select.innerHTML = '';
 
-        // Filter models based on current tab and component/sensor/scene selections
-        const filteredModels = filterModelsByCurrentSettings();
+		// Filter models based on current tab and component/sensor/scene selections
+		const filteredModels = filterModelsByCurrentSettings();
 
-        console.log(`Available models for ${currentTab}:`, filteredModels);
+		if (filteredModels.length === 0) {
+			const option = document.createElement('option');
+			option.text = "No models available";
+			option.disabled = true;
+			select.add(option);
+			console.log(`No models available for the current ${currentTab} settings`);
+			return;
+		}
 
-        // showNotification(filteredModels, "error");
+		// re-populate with any new/updated models
+		filteredModels.forEach(model => {
+			const option = document.createElement('option');
+			option.value = model;
+			option.text  = model;
+			option.className = modelsStatus[model]
+				? 'downloaded'
+				: 'not-downloaded';
+			select.add(option);
+		});
 
-        if (filteredModels.length === 0) {
-            const option = document.createElement('option');
-            option.text = "No models available";
-            option.disabled = true;
-            select.add(option);
-            console.log(`No models available for the current ${currentTab} settings`);
-        } else {
-            filteredModels.forEach(model => {
-                const option = document.createElement('option');
-                option.value = model;
-                option.text = model;
-
-                // Style downloaded models differently
-                if (modelsStatus[model]) {
-                    option.className = 'downloaded';
-                    console.log("Model downloaded: " + model);
-                } else {
-                    option.className = 'not-downloaded';
-                    console.log("Model not downloaded: " + model);
-                }
-
-                select.add(option);
-            });
-            // Select the first option by default
-            select.selectedIndex = 0;
-            console.log(`Default selected ${currentTab} model: ${select.options[0].value}`);
-        }
-    }
+		// if what was selected is still present, restore it; otherwise pick the first
+		const stillThere = Array.from(select.options)
+							  .some(o => o.value === previousValue);
+		if (previousValue && stillThere) {
+			select.value = previousValue;
+			console.log(`Restored previous ${currentTab} model: ${select.value}`);
+		} else {
+			select.selectedIndex = 0;
+			console.log(`Default selected ${currentTab} model: ${select.options[0].value}`);
+		}
+	}
 
     // Filter models based on current tab and selections
     function filterModelsByCurrentSettings() {
