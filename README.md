@@ -261,8 +261,8 @@ The table below summarizes the voxel resolution and GPU memory used by the curre
 TreeAIBox-main
 │   TreeAIBox_Plugin_Installer.exe                                  # Windows installer for the plugin
 │   CloudCompare_Python_Plugin.nsi                                  # Configuration of the plugin installer
-│   treeaibox-header.jpg                                            # Installer icon
-│   treeaibox-welcome.jpg                                           # Installer icon
+│   treeaibox-header.bmp                                            # Installer icon
+│   treeaibox-welcome.bmp                                           # Installer icon
 │   dl_visualization.svg                                            # The main DL network structure illustration
 │   LICENSE.txt                                                     # License file
 │   model_zoo.json                                                  # List of available trained DL model file names
@@ -416,8 +416,9 @@ Un installateur en ligne prêt à l’emploi est fourni. Assurez-vous que **l’
 
 ```bash
 cd %PROGRAMFILES%\CloudCompare\plugins\Python\Plugins
-git clone https://github.com/truebelief/cc-TreeAIBox-plugin-test TreeAIBox
-pip install PyQt6 PyQt6-WebEngine numpy torch requests
+git clone https://github.com/NRCan/TreeAIBox.git TreeAIBox
+pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+pip install PyQt6 PyQt6-WebEngine requests numpy_indexed timm numpy_groupies cut_pursuit_py circle_fit scikit-learn scikit-image
 ````
 
 Dans CloudCompare, enregistrez `TreeAIBox.py` via le bouton « Add Script » du menu Script Register.
@@ -463,8 +464,8 @@ Le tableau ci-dessous résume la résolution voxel et la mémoire GPU utilisée 
 TreeAIBox-main
 │   TreeAIBox_Plugin_Installer.exe                  # Installateur Windows pour le plugin
 │   CloudCompare_Python_Plugin.nsi                  # Configuration de l’installateur
-│   treeaibox-header.jpg                            # Icône d’installation
-│   treeaibox-welcome.jpg                           # Icône d’installation
+│   treeaibox-header.bmp                            # Icône d’installation
+│   treeaibox-welcome.bmp                           # Icône d’installation
 │   dl_visualization.svg                            # Illustration de la structure DL principale
 │   LICENSE.txt                                     # Fichier de licence
 │   model_zoo.json                                  # Liste des modèles DL disponibles
@@ -510,7 +511,7 @@ Voir [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## 📄 Licence
 
-Sauf indication contraire, le code source de ce projet est protégé par le droit d’auteur de la Couronne du gouvernement du Canada et est distribué sous la [Creative Commons Attribution-NonCommercial 4.0 International](LICENSE.txt).
+Sauf indication contraire, le code source de ce projet est protégé par le droit d’auteur de la Couronne du gouvernement du Canada et est distribué sous la [Licence publique Creative Commons Attribution – Pas d’utilisation commerciale 4.0 International](LICENSE.txt).
 
 Le mot-symbole Canada et les éléments graphiques associés à cette distribution sont protégés par la loi sur les marques de commerce et le droit d’auteur. Aucune permission n’est accordée pour les utiliser en dehors des paramètres du programme d’identité visuelle du gouvernement du Canada. Pour plus d’informations, voir [Exigences d’identité fédérale](https://www.canada.ca/en/treasury-board-secretariat/topics/government-communications/federal-identity-requirements.html).
 
