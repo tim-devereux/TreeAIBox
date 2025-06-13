@@ -373,18 +373,38 @@ TreeAIBox regroupe quatre flux de travail LiDAR essentiels dans une seule interf
 
 Un installateur en ligne prêt à l’emploi est fourni. Assurez-vous que **l’accès Internet** est activé :
 
-1. Téléchargez ou copiez **TreeAIBox_Plugin_Installer.exe** dans un dossier quelconque.  
-2. **Clic droit → Exécuter en tant qu’administrateur** (recommandé).  
-3. Suivez les instructions ; par défaut, il détecte votre dossier CloudCompare (ex. `%PROGRAMFILES%\CloudCompare`) via le registre.  
-4. L’installateur va :  
-   - Copier tous les scripts Python, fichiers UI, images et modules dans  
-     `…\CloudCompare\plugins\Python\Plugins\TreeAIBox\`  
-   - Générer un script batch d’aide pour détecter le GPU NVIDIA et installer la roue PyTorch appropriée. (Veuillez patienter.)  
-   - Lancer `pip` pour installer les paquets Python requis (PyQt6, torch, requests, etc.).
+1. **Installer CloudCompare**
+   Téléchargez et installez **CloudCompare v2.14.alpha** (dernière version) depuis
+   [https://cloudcompare-org.danielgm.net/release/](https://cloudcompare-org.danielgm.net/release/)
 
-Une fois terminé, redémarrez CloudCompare et lancez le plugin depuis la console Python.
+   > **Remarque :** CloudCompare v2.14.alpha (31 mai 2025) présente un bug connu.
+   > Pour l’éviter, rétrogradez vers une version antérieure ou téléchargez directement l’installateur **avril 2025** :
+   > [https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare\_v2.14.alpha\_setup\_x64\_April2025.exe](https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare_v2.14.alpha_setup_x64_April2025.exe)
 
-> **Remarque :** Le script NSIS (`CloudCompare_Python_Plugin.nsi`) peut être modifié pour personnaliser les chemins d’installation ou les versions des paquets.
+2. **Télécharger l’installateur TreeAIBox**
+   Récupérez **TreeAIBox\_Plugin\_Installer\_v1.0.exe** depuis notre page de releases :
+   [https://github.com/NRCan/TreeAIBox/releases](https://github.com/NRCan/TreeAIBox/releases)
+
+3. **Exécuter l’installateur**
+
+   * Faites un clic droit sur **TreeAIBox\_Plugin\_Installer\_v1.0.exe** et choisissez **Exécuter en tant qu’administrateur**.
+   * Suivez les instructions à l’écran. Par défaut, l’installateur détecte le dossier CloudCompare (ex. `%PROGRAMFILES%\CloudCompare`) via le registre.
+
+4. **Actions d’installation**
+
+   * Copie tous les scripts Python, fichiers UI, images et modules dans :
+
+     ```
+     …\CloudCompare\plugins\Python\Plugins\TreeAIBox\  
+     ```
+   * Génère un script batch d’aide pour détecter votre GPU NVIDIA et installer la roue PyTorch correspondante.
+   * Lance `pip` pour installer les paquets Python requis (par ex. PyQt6, torch, requests).
+
+5. **Finalisation**
+   Une fois l’installation terminée, redémarrez CloudCompare et lancez TreeAIBox depuis la console Python.
+
+> **Remarque :** Le script NSIS (`CloudCompare_Python_Plugin.nsi`) peut être modifié si vous devez personnaliser les chemins d’installation ou les versions des paquets.
+
 
 ### 2. Alternative manuelle (Git + pip)
 
