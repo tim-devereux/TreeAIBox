@@ -56,6 +56,7 @@ TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
 A ready-to-run online installer is provided. Ensure **internet access** is enabled:
 
 1. **Install CloudCompare**
+   
    Download and install **CloudCompare v2.14.alpha** (latest release) from
    [https://cloudcompare-org.danielgm.net/release/](https://cloudcompare-org.danielgm.net/release/)
 
@@ -63,6 +64,7 @@ A ready-to-run online installer is provided. Ensure **internet access** is enabl
    > [https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare\_v2.14.alpha\_setup\_x64\_April2025.exe](https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare_v2.14.alpha_setup_x64_April2025.exe)
 
 2. **Download the TreeAIBox Installer**
+   
    Get **TreeAIBox\_Plugin\_Installer\_v1.0.exe** from our releases page:
    [https://github.com/NRCan/TreeAIBox/releases](https://github.com/NRCan/TreeAIBox/releases)
 
@@ -82,6 +84,7 @@ A ready-to-run online installer is provided. Ensure **internet access** is enabl
    * Launches `pip` to install required Python packages (e.g., PyQt6, torch, requests).
 
 5. **Finish Up**
+
    Once installation completes, restart CloudCompare and launch TreeAIBox from the Python console.
 
 > **Note:** The NSIS script (`CloudCompare_Python_Plugin.nsi`) can be edited if you need to customize install paths or package versions.
@@ -374,6 +377,7 @@ TreeAIBox regroupe quatre flux de travail LiDAR essentiels dans une seule interf
 Un installateur en ligne prêt à l’emploi est fourni. Assurez-vous que **l’accès Internet** est activé :
 
 1. **Installer CloudCompare**
+
    Téléchargez et installez **CloudCompare v2.14.alpha** (dernière version) depuis
    [https://cloudcompare-org.danielgm.net/release/](https://cloudcompare-org.danielgm.net/release/)
 
@@ -382,6 +386,7 @@ Un installateur en ligne prêt à l’emploi est fourni. Assurez-vous que **l’
    > [https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare\_v2.14.alpha\_setup\_x64\_April2025.exe](https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare_v2.14.alpha_setup_x64_April2025.exe)
 
 2. **Télécharger l’installateur TreeAIBox**
+
    Récupérez **TreeAIBox\_Plugin\_Installer\_v1.0.exe** depuis notre page de releases :
    [https://github.com/NRCan/TreeAIBox/releases](https://github.com/NRCan/TreeAIBox/releases)
 
@@ -401,6 +406,7 @@ Un installateur en ligne prêt à l’emploi est fourni. Assurez-vous que **l’
    * Lance `pip` pour installer les paquets Python requis (par ex. PyQt6, torch, requests).
 
 5. **Finalisation**
+
    Une fois l’installation terminée, redémarrez CloudCompare et lancez TreeAIBox depuis la console Python.
 
 > **Remarque :** Le script NSIS (`CloudCompare_Python_Plugin.nsi`) peut être modifié si vous devez personnaliser les chemins d’installation ou les versions des paquets.
