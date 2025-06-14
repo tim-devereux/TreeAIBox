@@ -73,7 +73,7 @@ A ready-to-run online installer is provided. Ensure **internet access** is enabl
    * Right-click **TreeAIBox\_Plugin\_Installer\_v1.0.exe** and choose **Run as administrator**.
    * Follow the on-screen prompts. By default, the installer will detect your CloudCompare folder (e.g., `%PROGRAMFILES%\CloudCompare`) from the registry.
 
-4. **Installation Tasks**
+   **What Installer does:**
 
    * Copies all Python scripts, UI files, images, and modules into:
 
@@ -83,7 +83,7 @@ A ready-to-run online installer is provided. Ensure **internet access** is enabl
    * Generates a helper batch script to detect your NVIDIA GPU and install the matching PyTorch wheel.
    * Launches `pip` to install required Python packages (e.g., PyQt6, torch, requests).
 
-5. **Finish Up**
+4. **Finish Up**
 
    Once installation completes, restart CloudCompare and launch TreeAIBox from the Python console.
 
@@ -395,7 +395,7 @@ Un installateur en ligne prêt à l’emploi est fourni. Assurez-vous que **l’
    * Faites un clic droit sur **TreeAIBox\_Plugin\_Installer\_v1.0.exe** et choisissez **Exécuter en tant qu’administrateur**.
    * Suivez les instructions à l’écran. Par défaut, l’installateur détecte le dossier CloudCompare (ex. `%PROGRAMFILES%\CloudCompare`) via le registre.
 
-4. **Actions d’installation**
+   **Ce que fait l'installateur**
 
    * Copie tous les scripts Python, fichiers UI, images et modules dans :
 
@@ -405,7 +405,7 @@ Un installateur en ligne prêt à l’emploi est fourni. Assurez-vous que **l’
    * Génère un script batch d’aide pour détecter votre GPU NVIDIA et installer la roue PyTorch correspondante.
    * Lance `pip` pour installer les paquets Python requis (par ex. PyQt6, torch, requests).
 
-5. **Finalisation**
+4. **Finalisation**
 
    Une fois l’installation terminée, redémarrez CloudCompare et lancez TreeAIBox depuis la console Python.
 
