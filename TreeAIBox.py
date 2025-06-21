@@ -1639,14 +1639,7 @@ if __name__ == "__main__":
     if app is None:
         app = QApplication(sys.argv)
         
-        window = TreeAIBoxWeb()
-        window.show()
-        app.exec()
-        del app
-        sys.exit()
-    else:
-        window = TreeAIBoxWeb()
-        window.show()
-        app.exec()
-        print("Please restart CC to run the plugin")
+    window = TreeAIBoxWeb()
+    window.show()
+    sys.exit(app.exec())
 
