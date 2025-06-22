@@ -60,9 +60,6 @@ A ready-to-run online installer is provided. Ensure **internet access** is enabl
    Download and install **CloudCompare v2.14.alpha** (latest release) from
    [https://cloudcompare-org.danielgm.net/release/](https://cloudcompare-org.danielgm.net/release/)
 
-   > **Note:** CloudCompare v2.14.alpha (May 31, 2025) has a known bug. To avoid it, either roll back to an earlier build or download the **April 2025** installer directly:
-   > [https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare\_v2.14.alpha\_setup\_x64\_April2025.exe](https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare_v2.14.alpha_setup_x64_April2025.exe)
-
 2. **Download the TreeAIBox Installer**
    
    Get **TreeAIBox\_Plugin\_Installer\_v1.0.exe** from our releases page:
