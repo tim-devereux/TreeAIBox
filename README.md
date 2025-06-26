@@ -60,9 +60,6 @@ A ready-to-run online installer is provided. Ensure **internet access** is enabl
    Download and install **CloudCompare v2.14.alpha** (latest release) from
    [https://cloudcompare-org.danielgm.net/release/](https://cloudcompare-org.danielgm.net/release/)
 
-   > **Note:** CloudCompare v2.14.alpha (May 31, 2025) has a known bug. To avoid it, either roll back to an earlier build or download the **April 2025** installer directly:
-   > [https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare\_v2.14.alpha\_setup\_x64\_April2025.exe](https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare_v2.14.alpha_setup_x64_April2025.exe)
-
 2. **Download the TreeAIBox Installer**
    
    Get **TreeAIBox\_Plugin\_Installer\_v1.0.exe** from our releases page:
@@ -112,7 +109,7 @@ Then select a point cloud, pick your module tab, choose/download a model, adjust
 ![WoodCls](https://github.com/user-attachments/assets/2cf1288e-d9e8-4cf8-8251-4e8e2dcd17ec)
 ![QSM](https://github.com/user-attachments/assets/aa1a0bc8-febe-41d1-8bdb-f952970b5017)
 
-
+When processing ALS data, set an appropriate voxel resolution (e.g., 0.8 m horizontal by 2.0 m vertical) to optimize tree detection.
 
 ## ⚙️ Configuration
 
@@ -381,10 +378,6 @@ Un installateur en ligne prêt à l’emploi est fourni. Assurez-vous que **l’
    Téléchargez et installez **CloudCompare v2.14.alpha** (dernière version) depuis
    [https://cloudcompare-org.danielgm.net/release/](https://cloudcompare-org.danielgm.net/release/)
 
-   > **Remarque :** CloudCompare v2.14.alpha (31 mai 2025) présente un bug connu.
-   > Pour l’éviter, rétrogradez vers une version antérieure ou téléchargez directement l’installateur **avril 2025** :
-   > [https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare\_v2.14.alpha\_setup\_x64\_April2025.exe](https://github.com/NRCan/TreeAIBox/releases/download/v1.0/CloudCompare_v2.14.alpha_setup_x64_April2025.exe)
-
 2. **Télécharger l’installateur TreeAIBox**
 
    Récupérez **TreeAIBox\_Plugin\_Installer\_v1.0.exe** depuis notre page de releases :
@@ -434,6 +427,8 @@ Sélectionnez ensuite un nuage de points, choisissez l’onglet du module souhai
 ![capture d’écran TreeIsoNet](https://github.com/user-attachments/assets/d82e3bf6-8db1-49a4-a7c2-134ce4760fec)
 ![capture d’écran WoodCls](https://github.com/user-attachments/assets/2cf1288e-d9e8-4cf8-8251-4e8e2dcd17ec)
 ![capture d’écran QSM](https://github.com/user-attachments/assets/aa1a0bc8-febe-41d1-8bdb-f952970b5017)
+
+Lors du traitement des données ALS, définissez une résolution de voxel appropriée (par exemple, 0,8 m horizontal sur 2,0 m vertical) pour optimiser la détection des arbres.
 
 ## ⚙️ Configuration
 
