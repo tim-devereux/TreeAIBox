@@ -154,15 +154,15 @@ def treeLoc(config_file, pcd, model_path, use_cuda=True,if_stem=False,cutoff_thr
     pcd_min = np.min(pcd[:, :3], axis=0)
 
     if if_stem:
-        # cut_grid_res=2.0
-        # tile_ij = np.floor((pcd[:, :2] - pcd_min[:2]) / cut_grid_res).astype(np.int32)
-        # _, tile_idx_groups = npi.group_by(tile_ij, np.arange(len(tile_ij)))
-        # filter_idx=[]
-        # for iter, idx in enumerate(tile_idx_groups):
-        #     pcd_sp_min_z=np.min(pcd[idx, 2])
-        #     filter_idx.append(idx[(pcd[idx, 2]-pcd_sp_min_z)<=(np.max(pcd[idx, 2])-pcd_sp_min_z)*cutoff_thresh])
-        # filter_idx=np.concatenate(filter_idx)
-        filter_idx=(pcd[:,2]-pcd_min[2])<(np.max(pcd[:,2])-pcd_min[2])*cutoff_thresh
+        cut_grid_res=5.0#rough tile size to filter lowest point and to cut the stem upper height
+        tile_ij = np.floor((pcd[:, :2] - pcd_min[:2]) / cut_grid_res).astype(np.int32)
+        _, tile_idx_groups = npi.group_by(tile_ij, np.arange(len(tile_ij)))
+        filter_idx=[]
+        for iter, idx in enumerate(tile_idx_groups):
+            pcd_sp_min_z=np.min(pcd[idx, 2])
+            filter_idx.append(idx[(pcd[idx, 2]-pcd_sp_min_z)<=(np.max(pcd[idx, 2])-pcd_sp_min_z)*cutoff_thresh])
+        filter_idx=np.concatenate(filter_idx)
+        # filter_idx=(pcd[:,2]-pcd_min[2])<(np.max(pcd[:,2])-pcd_min[2])*cutoff_thresh
         pcd=pcd[filter_idx]
 
     block_ij = np.floor((pcd[:, :2] - pcd_min[:2]) / min_res[:2] / nbmat_sz[:2]).astype(np.int32)
@@ -285,20 +285,16 @@ if __name__ == "__main__":
     import laspy
 
     use_cuda=True
-
-    # data_dir="../../data"
-    # data_dir=r"D:\xzx\prj\cc-TreeAIBox-plugin\data\new"
-    data_dir=r"F:\prj\CC2\comp\cc-TreeAIBox-plugin\data\new"
+    data_dir=r"C:\Users\trueb\Downloads"
     model_name="treeisonet_tls_boreal_treeloc_esegformer3D_128_10cm(GPU3GB)"
     # model_name="treeisonet_uav_mixedwood_treeloc_esegformer3D_128_10cm(GPU3GB)"
-
-
-    # data_dir=r"D:\xzx\prj\cc-TreeAIBox-plugin-testing\data\new"
     # model_name="treeisonet_als_reclamation_treeloc_segformer3D_128_10cm(GPU4GB)"
 
     config_file=os.path.join(f"{model_name}.json")
     pcd_fnames = glob.glob(os.path.join(data_dir, "*.la*"))
-    model_path = f"../../models/{model_name}.pth"
+    # pcd_fnames = glob.glob(os.path.join(data_dir, "jp9_riegl.laz"))
+    # model_path = f"../../models/{model_name}.pth"
+    model_path = rf"C:\Users\trueb\AppData\Local\CloudCompare\TreeAIBox\models\{model_name}.pth"
 
     out_path="output"
 
@@ -309,12 +305,10 @@ if __name__ == "__main__":
         print(f"Processing {pcd_fname}...")
         las = laspy.open(pcd_fname).read()
         pcd = np.transpose(np.array([las.x, las.y, las.z]))  # las.point_format.dimension_names
-        # pcd[:,:3]=pcd[:,:3]-np.min(pcd[:,:3],0)
         pcd_min=np.min(pcd[:,:3],0)
         pcd[:,:3]=pcd[:,:3]-pcd_min
-        # pcd=pcd[pcd[:, 2] < 3]
-        # pred_conf_rads=treeLoc(config_file,pcd,model_path,use_cuda=use_cuda,if_stem=False)
-        preds=treeLoc(config_file,pcd,model_path,use_cuda=use_cuda,if_stem=True,cutoff_thresh=1.0)
+        # preds=treeLoc(config_file,pcd,model_path,use_cuda=use_cuda,if_stem=True,cutoff_thresh=1.0)
+        preds=treeLoc(config_file,pcd,model_path,use_cuda=use_cuda,if_stem=True,cutoff_thresh=0.2)
         if use_cuda:
             if i==0:
                 free, total = torch.cuda.mem_get_info(torch.device("cuda"))
