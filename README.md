@@ -6,6 +6,8 @@ A CloudCompare Python plugin providing a unified web-style GUI for a suite of Li
 
 It enables forestry practitioners and researchers to interactively process 3D LiDAR data within the open-source CloudCompare software.
 
+This aligns with the idea that agentic AI should first break down tasks into sub-questions and then fine-tune smaller, specialized vision models—an approach that can be both more effective and more cost-efficient than relying solely on large language models.
+
 ## 📖 Overview
 
 TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
@@ -324,6 +326,8 @@ Developed by Zhouxin Xi, tested by Charumitha Selvaraj
 Un plugin Python pour CloudCompare offrant une interface graphique de style web unifiée pour une suite de modules de traitement LiDAR dédiés à l’analyse forestière et arboricole.
 
 Il permet aux praticiens et aux chercheurs forestiers de traiter de manière interactive des données LiDAR 3D au sein du logiciel open source CloudCompare.
+
+Cela s’inscrit dans l’idée que l’IA agentielle devrait d’abord décomposer les tâches en sous-questions, puis affiner des modèles de vision plus petits et spécialisés — une approche à la fois plus efficace et plus économique que de se fier uniquement aux grands modèles de language.
 
 ## 📖 Vue d’ensemble
 
