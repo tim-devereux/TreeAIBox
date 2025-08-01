@@ -24,7 +24,9 @@ TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
 - **QSM**  
   Plot-level skeletonization and export of tree structure to XML/OBJ.
 
-
+- **UrbanFiltering**  
+  Supervised deep-learning filtering to separate seven classes from urban scenes (ground, vegetation, car, wiring, fence, pole, and building).
+- 
 ## 🚀 Features
 
 - **20+ pretrained AI models**  
@@ -34,7 +36,7 @@ TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
   Operates directly on raw 3D point clouds—no CHM or raster inputs—using voxel-based AI architectures for both training and inference.
   
 - **Sensor, scene, and resolution options**  
-  Supports TLS, ALS, and UAV LiDAR across boreal, mixedwood, and reclamation forest types.
+  Supports TLS, ALS, and UAV LiDAR across boreal, mixedwood, reclamation, and urban forest types.
   
 - **GPU acceleration toggle**  
   Runs on either GPU (CUDA) or CPU for flexibility.
@@ -111,7 +113,7 @@ Then select a point cloud, pick your module tab, choose/download a model, adjust
 ![WoodCls](https://github.com/user-attachments/assets/2cf1288e-d9e8-4cf8-8251-4e8e2dcd17ec)
 ![QSM](https://github.com/user-attachments/assets/aa1a0bc8-febe-41d1-8bdb-f952970b5017)
 
-When processing ALS data, set an appropriate voxel resolution (e.g., 0.8 m horizontal by 2.0 m vertical) to optimize tree detection.
+When isolating ALS individual trees, set an appropriate voxel resolution (e.g., 0.8 m horizontal by 2.0 m vertical) to optimize tree detection on TreeisoNet.
 
 ## ⚙️ Configuration
 
