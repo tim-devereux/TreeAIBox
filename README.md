@@ -25,7 +25,7 @@ TreeAIBox brings together four core LiDAR-processing workflows in a single GUI:
   Plot-level skeletonization and export of tree structure to XML/OBJ.
 
 - **UrbanFiltering**  
-  Supervised deep learning–based filtering to classify urban scenes into seven categories: ground, vegetation, cars, wires, fences, poles, and buildings.
+  Supervised deep learning–based filtering to classify urban scenes into seven categories: 1 = ground, 2 = vegetation, 3 = vehicles (cars+trucks), 4 = powerlines, 5 = fences, 6 = poles, 7 = buildings.
 
 
 ## 🚀 Features
@@ -356,7 +356,7 @@ TreeAIBox regroupe quatre flux de travail LiDAR essentiels dans une seule interf
   Squelettisation au niveau de la parcelle et export de la structure des arbres au format XML/OBJ.
   
 - **UrbanFiltering**
-  Filtrage supervisé basé sur l’apprentissage profond pour classer les scènes urbaines en sept catégories : sol, végétation, voitures, câbles, clôtures, poteaux et bâtiments.
+  Filtrage supervisé basé sur l’apprentissage profond pour classer les scènes urbaines en sept catégories : 1 = sol, 2 = végétation, 3 = véhicules (voitures + camions), 4 = lignes électriques, 5 = clôtures, 6 = poteaux, 7 = bâtiments.
 
 ## 🚀 Fonctionnalités
 
